@@ -508,6 +508,25 @@ impl Packfile {
         result
     }
 
+    pub fn file_names<'zip>(&'zip self) -> impl Iterator<Item = &'zip str> + 'zip {
+        struct Iter<'a, I> {
+            zip: Box<std::sync::MutexGuard<'a, ZipArchive<Cursor<Vec<u8>>>>>,
+            iter: I,
+        }
+        impl<'a, I: Iterator<Item = &'a str>> Iterator for Iter<'a, I> {
+            type Item = &'a str;
+
+            fn next(&mut self) -> Option<Self::Item> {
+                self.iter.next()
+            }
+        }
+        let zip = self.zip.lock().unwrap();
+        Iter {
+            iter: zip.file_names(),
+            zip,
+        }
+    }
+
     pub fn into_zip(self) -> Mutex<ZipArchive<Cursor<Vec<u8>>>> {
         self.zip
     }
