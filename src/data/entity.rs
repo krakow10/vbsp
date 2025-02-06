@@ -280,6 +280,8 @@ mod typed {
         #[serde(rename = "info_player_teamspawn")]
         #[serde(borrow)]
         Spawn(Spawn<'a>),
+        #[serde(rename = "info_player_counterterrorist")]
+        CounterTerroristSpawn(CounterTerroristSpawn),
         #[serde(rename = "func_regenerate")]
         #[serde(borrow)]
         Regenerate(Regenerate<'a>),
@@ -450,6 +452,18 @@ mod typed {
         pub model: &'a str,
         #[serde(rename = "rendercolor")]
         pub color: Color,
+    }
+
+    // {
+    // "origin": "-128 0 14416",
+    // "hammerid": "415",
+    // "angles": "0 0 0",
+    // "classname": "info_player_counterterrorist"
+    // }
+    #[derive(Debug, Clone, Deserialize)]
+    pub struct CounterTerroristSpawn {
+        pub origin: Vector,
+        pub angles: Angles,
     }
 
     #[derive(Debug, Clone, Deserialize)]
