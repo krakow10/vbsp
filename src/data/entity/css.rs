@@ -6,7 +6,7 @@ use crate::{Angles, Color, LightColor, Vector};
 #[derive(Debug, Clone, Deserialize)]
 #[non_exhaustive]
 #[serde(tag = "classname")]
-pub enum Entity {
+pub enum Entity<'a> {
 	#[serde(rename="env_beam")]
 	EnvBeam(EnvBeam),
 	#[serde(rename="env_detail_controller")]
@@ -241,13 +241,13 @@ pub struct CounterTerroristSpawn {
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct Worldspawn{
-    "maxpropscreenwidth": "-1",
-    "skyname": "italy",
-    "detailmaterial": "detail/detailsprites",
-    "world_mins": "-2737 -1681 -244",
-    "world_maxs": "432 944 360",
-    "detailvbsp": "detail.vbsp"
+pub struct Worldspawn<'a>{
+    pub maxpropscreenwidth: i32,//"-1",
+    pub skyname: &'a str,
+    pub detailmaterial: &'a str,
+    pub world_mins: Vector,
+    pub world_maxs: Vector,
+    pub detailvbsp: &'a str,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -258,111 +258,111 @@ pub struct InfoPlayerTerrorist{
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct TriggerTeleport{
-    "target": "level1",
-    "startdisabled": "0",
+    pub target: &'a str,
+    pub startdisabled: "0",
     pub origin:Vector,
-    "spawnflags": "1",
-    "model": "*2"
+    pub spawnflags: u32,
+    pub model: &'a str"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct InfoTeleportDestination{
 	pub origin:Vector,
-    "targetname": "level1",
+    pub targetname: &'a str,
     pub angles:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncWaterAnalog{
-    "rendercolor": "255 255 255",
-    "renderfx": "0",
-    "model": "*6",
-    "waveheight": "3.0",
-    "_minlight": "0.0",
-    "movedir": "0 0 0",
-    "movedistance": "100",
-    "speed": "100",
-    "disablereceiveshadows": "0",
-    "disableshadows": "0",
-    "renderamt": "255",
+    pub rendercolor: "255 255 255",
+    pub renderfx: "0",
+    pub model: &'a str,
+    pub waveheight: "3.0",
+    pub _minlight: "0.0",
+    pub movedir: "0 0 0",
+    pub movedistance: "100",
+    pub speed: "100",
+    pub disablereceiveshadows: "0",
+    pub disableshadows: "0",
+    pub renderamt: "255",
     pub origin:Vector,
-    "rendermode": "0"
+    pub rendermode: "0"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct LightEnvironment{
 	pub origin:Vector,
-    "_light": "255 255 198 300",
+    pub _light: "255 255 198 300",
     pub angles:Vector,
-    "_ambient": "255 255 255 20",
-    "_lighthdr": "-1 -1 -1 1",
-    "pitch": "-90",
-    "_ambienthdr": "-1 -1 -1 1"
+    pub _ambient: "255 255 255 20",
+    pub _lighthdr: "-1 -1 -1 1",
+    pub pitch: "-90",
+    pub _ambienthdr: "-1 -1 -1 1"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct GamePlayerEquip{
 	pub origin:Vector,
-    "weapon_knife": "1",
+    pub weapon_knife: "1",
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct TriggerHurt{
-    "damagecap": "1000",
-    "model": "*76",
-    "spawnflags": "1",
-    "damagetype": "0",
+    pub damagecap: "1000",
+    pub model: &'a str,
+    pub spawnflags: u32,
+    pub damagetype: "0",
     pub origin:Vector,
-    "damage": "1000",
-    "startdisabled": "0",
-    "damagemodel": "0"
+    pub damage: "1000",
+    pub startdisabled: "0",
+    pub damagemodel: &'a str"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncButton{
-    "movedir": "0 0 0",
-    "onpressed": "kill04,disable,,0.5,-1",
-    "spawnflags": "1025",
-    "unlocked_sentence": "0",
-    "speed": "5",
-    "wait": "3",
-    "sounds": "0",
+    pub movedir: "0 0 0",
+    pub onpressed: "kill04,disable,,0.5,-1",
+    pub spawnflags: u32,
+    pub unlocked_sentence: "0",
+    pub speed: "5",
+    pub wait: "3",
+    pub sounds: "0",
     pub origin:Vector,
-    "rendercolor": "255 255 255",
-    "disablereceiveshadows": "0",
-    "lip": "0",
-    "model": "*81",
-    "locked_sentence": "0",
-    "unlocked_sound": "0",
-    "renderamt": "255",
-    "rendermode": "0",
-    "locked_sound": "0",
-    "renderfx": "0",
-    "health": "0"
+    pub rendercolor: "255 255 255",
+    pub disablereceiveshadows: "0",
+    pub lip: "0",
+    pub model: &'a str,
+    pub locked_sentence: "0",
+    pub unlocked_sound: "0",
+    pub renderamt: "255",
+    pub rendermode: "0",
+    pub locked_sound: "0",
+    pub renderfx: "0",
+    pub health: "0"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponM4A1{
-    "spawnflags": "1",
+    pub spawnflags: u32,
     pub angles:Vector,
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WaterLodControl{
-    "cheapwaterenddistance": "2000",
-    "cheapwaterstartdistance": "1000",
+    pub cheapwaterenddistance: "2000",
+    pub cheapwaterstartdistance: "1000",
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncWall{
-    "renderamt": "100",
-    "rendercolor": "255 255 255",
-    "rendermode": "2",
-    "disableshadows": "0",
-    "disablereceiveshadows": "0",
-    "model": "*1",
-    "renderfx": "0"
+    pub renderamt: "100",
+    pub rendercolor: "255 255 255",
+    pub rendermode: "2",
+    pub disableshadows: "0",
+    pub disablereceiveshadows: "0",
+    pub model: &'a str,
+    pub renderfx: "0"
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -372,23 +372,23 @@ pub struct EnvTonemapController{
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvSun{
-    "rendercolor": "237 232 216",
-    "target": "sun",
-    "hdrcolorscale": "1.0",
-    "material": "sprites/light_glow02_add_noz",
-    "size": "12",
+    pub rendercolor: "237 232 216",
+    pub target: &'a str,
+    pub hdrcolorscale: f32,
+    pub material: "sprites/light_glow02_add_noz",
+    pub size: "12",
     pub origin:Vector,
     pub angles:Vector,
-    "overlaymaterial": "sprites/light_glow02_add_noz",
-    "overlaycolor": "0 0 0",
-    "overlaysize": "-1"
+    pub overlaymaterial: "sprites/light_glow02_add_noz",
+    pub overlaycolor: "0 0 0",
+    pub overlaysize: "-1"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct InfoTarget{
-    "spawnflags": "0",
+    pub spawnflags: u32,
     pub origin:Vector,
-    "targetname": "sun",
+    pub targetname: &'a str,
     pub angles:Vector,
 }
 
@@ -396,648 +396,648 @@ pub struct InfoTarget{
 pub struct WeaponAwp{
 	pub origin:Vector,
     pub angles:Vector,
-    "targetname": "secretw1",
-    "spawnflags": "1"
+    pub targetname: &'a str,
+    pub spawnflags: u32"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvSpritetrail{
-    "endwidth": "1.0",
-    "lifetime": "1",
-    "parentname": "secretw1",
+    pub endwidth: "1.0",
+    pub lifetime: "1",
+    pub parentname: "secretw1",
     pub origin:Vector,
-    "rendercolor": "0 13 168",
-    "renderamt": "255",
-    "startwidth": "8.0",
-    "spritename": "sprites/bluelaser1.vmt",
-    "rendermode": "5"
+    pub rendercolor: "0 13 168",
+    pub renderamt: "255",
+    pub startwidth: "8.0",
+    pub spritename: "sprites/bluelaser1.vmt",
+    pub rendermode: "5"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponDeagle{
     pub origin:Vector,
     pub angles:Vector,
-    "ammo": "31"
+    pub ammo: u32
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct ShadowControl{
 	pub origin:Vector,
 	pub angles:Vector,
-    "distance": "75",
-    "color": "128 128 128",
-    //"hammerid": "2971"
+    pub distance: "75",
+    pub color: "128 128 128",
+    //pub hammerid: "2971"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponElite{
-    //"hammerid": "7248",
-    "targetname": "gunmapby",
-    "ammo": "31",
-    "spawnflags": "1",
+    //pub hammerid: "7248",
+    pub targetname: &'a str,
+    pub ammo: u32,
+    pub spawnflags: u32,
     pub angles:Vector,
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncRotating{
-    "spawnflags": "67",
-    "volume": "0",
-    "model": "*43",
-    "solidbsp": "0",
-    "dmg": "0",
-    "disableshadows": "1",
-    "renderamt": "255",
-    "parentname": "gunmapby",
-    "fanfriction": "0",
+    pub spawnflags: u32,
+    pub volume: "0",
+    pub model: &'a str,
+    pub solidbsp: "0",
+    pub dmg: "0",
+    pub disableshadows: "1",
+    pub renderamt: "255",
+    pub parentname: "gunmapby",
+    pub fanfriction: "0",
     pub origin:Vector,
-    "rendercolor": "255 255 255",
-    "disablereceiveshadows": "1",
-    "renderfx": "0",
-    //"hammerid": "7383",
-    "maxspeed": "50",
+    pub rendercolor: "255 255 255",
+    pub disablereceiveshadows: "1",
+    pub renderfx: "0",
+    //pub hammerid: "7383",
+    pub maxspeed: "50",
     pub angles:Vector,
-    "rendermode": "0"
+    pub rendermode: "0"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncBreakable{
-    "gibdir": "0 0 0",
-    "rendercolor": "255 255 255",
-    "performancemode": "0",
-    "explodemagnitude": "0",
-    "pressuredelay": "0",
+    pub gibdir: "0 0 0",
+    pub rendercolor: "255 255 255",
+    pub performancemode: "0",
+    pub explodemagnitude: "0",
+    pub pressuredelay: "0",
     pub origin:Vector,
-    "explodedamage": "0",
-    "material": "10",
-    "model": "*44",
-    "renderfx": "0",
-    "explosion": "0",
-    "propdata": "0",
-    "spawnobject": "0",
-    "exploderadius": "0",
-    "health": "170",
-    "rendermode": "0",
-    "nodamageforces": "0",
-    "disablereceiveshadows": "1",
-    //"hammerid": "8344",
-    "renderamt": "255",
-    "physdamagescale": "1.0",
-    "spawnflags": "0",
-    "disableshadows": "1",
-    "minhealthdmg": "0"
+    pub explodedamage: "0",
+    pub material: "10",
+    pub model: &'a str,
+    pub renderfx: "0",
+    pub explosion: "0",
+    pub propdata: "0",
+    pub spawnobject: "0",
+    pub exploderadius: "0",
+    pub health: "170",
+    pub rendermode: "0",
+    pub nodamageforces: "0",
+    pub disablereceiveshadows: "1",
+    //pub hammerid: "8344",
+    pub renderamt: "255",
+    pub physdamagescale: "1.0",
+    pub spawnflags: u32,
+    pub disableshadows: "1",
+    pub minhealthdmg: "0"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponP90{
-    "ammo": "31",
+    pub ammo: u32,
     pub origin:Vector,
-    "spawnflags": "1",
-    "targetname": "p90",
-    //"hammerid": "15611",
+    pub spawnflags: u32,
+    pub targetname: &'a str,
+    //pub hammerid: "15611",
     pub angles:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponGlock{
-    "targetname": "glock",
-    //"hammerid": "19772",
+    pub targetname: &'a str,
+    //pub hammerid: "19772",
     pub origin:Vector,
     pub angles:Vector,
-    "spawnflags": "1",
-    "ammo": "31"
+    pub spawnflags: u32,
+    pub ammo: u32
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct LogicAuto{
-	//"hammerid": "20253",
+	//pub hammerid: "20253",
     pub origin:Vector,
-    "spawnflags": "0",
-    "onmapspawn": "d_red_3,open,,0,-1"
+    pub spawnflags: u32,
+    pub onmapspawn: "d_red_3,open,,0,-1"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncWallToggle{
-    "rendercolor": "255 255 255",
-    "renderamt": "255",
-    //"hammerid": "20341",
-    "disablereceiveshadows": "1",
-    "model": "*210",
-    "disableshadows": "1",
-    "spawnflags": "0",
-    "rendermode": "0",
-    "renderfx": "0",
-    "targetname": "wall_to_glock"
+    pub rendercolor: "255 255 255",
+    pub renderamt: "255",
+    //pub hammerid: "20341",
+    pub disablereceiveshadows: "1",
+    pub model: &'a str,
+    pub disableshadows: "1",
+    pub spawnflags: u32,
+    pub rendermode: "0",
+    pub renderfx: "0",
+    pub targetname: &'a str,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponM249{
 	pub angles:Vector,
-    "targetname": "m249",
+    pub targetname: &'a str,
     pub origin:Vector,
-    //"hammerid": "24744",
-    "spawnflags": "1",
-    "ammo": "31",
+    //pub hammerid: "24744",
+    pub spawnflags: u32,
+    pub ammo: u32,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponHegrenade{
 	pub origin:Vector,
-	//"hammerid": "28302",
-    "targetname": "nade",
+	//pub hammerid: "28302",
+    pub targetname: &'a str,
     pub angles:Vector,
-    "spawnflags": "1"
+    pub spawnflags: u32"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PointViewcontrol{
-    "wait": "10",
+    pub wait: "10",
     pub angles:Vector,
-    "spawnflags": "1",
-    "acceleration": "500",
-    "target": "cam1",
-    "deceleration": "500",
+    pub spawnflags: u32,
+    pub acceleration: "500",
+    pub target: &'a str,
+    pub deceleration: "500",
     pub origin:Vector,
-    //"hammerid": "36815"
+    //pub hammerid: "36815"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponScout{
-    "spawnflags": "0",
-    "targetname": "scout1",
+    pub spawnflags: u32,
+    pub targetname: &'a str,
     pub origin:Vector,
     pub angles:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PointTemplate{
-    "template01": "scout1",
-    "spawnflags": "2",
-    "targetname": "template1",
+    pub template01: "scout1",
+    pub spawnflags: u32,
+    pub targetname: &'a str,
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncDoorRotating{
-    "unlocked_sentence": "0",
-    "renderamt": "255",
-    "rendermode": "0",
-    "spawnflags": "4114",
-    "forceclosed": "0",
-    "locked_sentence": "0",
-    "dmg": "0",
-    "spawnpos": "0",
-    "ignoredebris": "0",
-    "renderfx": "0",
-    "solidbsp": "0",
-    "rendercolor": "255 255 255",
-    "model": "*453",
-    "targetname": "door_finish",
-    "health": "0",
+    pub unlocked_sentence: "0",
+    pub renderamt: "255",
+    pub rendermode: "0",
+    pub spawnflags: u32,
+    pub forceclosed: "0",
+    pub locked_sentence: "0",
+    pub dmg: "0",
+    pub spawnpos: "0",
+    pub ignoredebris: "0",
+    pub renderfx: "0",
+    pub solidbsp: "0",
+    pub rendercolor: "255 255 255",
+    pub model: &'a str,
+    pub targetname: &'a str,
+    pub health: "0",
     pub origin:Vector,
-    "lip": "0",
-    "speed": "60",
-    "disablereceiveshadows": "0",
-    "loopmovesound": "0",
+    pub lip: "0",
+    pub speed: "60",
+    pub disablereceiveshadows: "0",
+    pub loopmovesound: "0",
     pub angles:Vector,
-    "wait": "3",
-    "distance": "135",
-    "disableshadows": "0"
+    pub wait: "3",
+    pub distance: "135",
+    pub disableshadows: "0"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct TriggerPush{
-    "alternateticksfix": "0",
-    "speed": "1000",
-    "model": "*456",
+    pub alternateticksfix: "0",
+    pub speed: "1000",
+    pub model: &'a str,
     pub origin:Vector,
-    "spawnflags": "1",
-    "pushdir": "0 90 0",
-    "startdisabled": "0",
+    pub spawnflags: u32,
+    pub pushdir: "0 90 0",
+    pub startdisabled: "0",
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncPhysbox{
-    "preferredcarryangles": "0 0 0",
-    "spawnobject": "0",
-    "disableshadows": "0",
-    "spawnflags": "0",
-    "explodedamage": "0",
-    "performancemode": "0",
-    "gibdir": "0 0 0",
-    "propdata": "0",
-    "damagetoenablemotion": "0",
-    "disablereceiveshadows": "0",
-    "renderfx": "0",
-    "massscale": "0",
-    "nodamageforces": "0",
+    pub preferredcarryangles: "0 0 0",
+    pub spawnobject: "0",
+    pub disableshadows: "0",
+    pub spawnflags: u32,
+    pub explodedamage: "0",
+    pub performancemode: "0",
+    pub gibdir: "0 0 0",
+    pub propdata: "0",
+    pub damagetoenablemotion: "0",
+    pub disablereceiveshadows: "0",
+    pub renderfx: "0",
+    pub massscale: "0",
+    pub nodamageforces: "0",
     pub origin:Vector,
-    "parentname": "wdk2",
-    "notsolid": "1",
-    "damagetype": "0",
-    "exploderadius": "0",
-    "renderamt": "255",
-    "rendercolor": "255 255 255",
-    "explosion": "0",
-    "material": "7",
-    "rendermode": "0",
-    "forcetoenablemotion": "0",
-    "explodemagnitude": "0",
-    "health": "0",
-    "model": "*655",
-    "pressuredelay": "0"
+    pub parentname: "wdk2",
+    pub notsolid: "1",
+    pub damagetype: "0",
+    pub exploderadius: "0",
+    pub renderamt: "255",
+    pub rendercolor: "255 255 255",
+    pub explosion: "0",
+    pub material: "7",
+    pub rendermode: "0",
+    pub forcetoenablemotion: "0",
+    pub explodemagnitude: "0",
+    pub health: "0",
+    pub model: &'a str,
+    pub pressuredelay: "0"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponSmokegrenade{
     pub origin:Vector,
     pub angles:Vector,
-    "spawnflags": "1",
-    "targetname": "smoke1"
+    pub spawnflags: u32,
+    pub targetname: &'a str,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FilterDamageType{
 	pub origin:Vector,
-    "negated": "1",
-    "targetname": "falldmg",
-    "damagetype": "32"
+    pub negated: "1",
+    pub targetname: &'a str,
+    pub damagetype: "32"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvFogController{
-    "fogend": "4000",
-    "fogcolor": "0 0 0",
+    pub fogend: "4000",
+    pub fogcolor: "0 0 0",
     pub origin:Vector,
-    "fogcolor2": "255 255 255",
-    "fogenable": "1",
-    "farz": "16384",
-    "spawnflags": "0",
-    "use_angles": "1",
-    "fogstart": "1000",
-    "mindxlevel": "0",
-    "fogdir": "0 0 -1",
-    "maxdxlevel": "0",
-    "fogblend": "0",
-    "foglerptime": "0",
+    pub fogcolor2: "255 255 255",
+    pub fogenable: "1",
+    pub farz: "16384",
+    pub spawnflags: u32,
+    pub use_angles: "1",
+    pub fogstart: "1000",
+    pub mindxlevel: "0",
+    pub fogdir: "0 0 -1",
+    pub maxdxlevel: "0",
+    pub fogblend: "0",
+    pub foglerptime: "0",
     pub angles:Vector,
-    "fogmaxdensity": "1",
+    pub fogmaxdensity: "1",
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncConveyor{
-    "spawnflags": "0",
-    "disablereceiveshadows": "0",
-    "rendercolor": "255 255 255",
-    "rendermode": "0",
+    pub spawnflags: u32,
+    pub disablereceiveshadows: "0",
+    pub rendercolor: "255 255 255",
+    pub rendermode: "0",
     pub angles:Vector,
-    "renderfx": "0",
-    "disableshadows": "0",
-    "speed": "300",
-    "renderamt": "255",
-    "model": "*60",
-    "movedir": "0 45 0"
+    pub renderfx: "0",
+    pub disableshadows: "0",
+    pub speed: "300",
+    pub renderamt: "255",
+    pub model: &'a str,
+    pub movedir: "0 45 0"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FilterActivatorName{
 	pub origin:Vector,
-    "negated": "allow entities that match criteria",
-    "targetname": "filter_activator",
-    "filtername": "activator"
+    pub negated: "allow entities that match criteria",
+    pub targetname: &'a str,
+    pub filtername: "activator"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct TriggerMultiple{
-    "model": "*86",
-    "startdisabled": "0",
-    "wait": "0.01",
-    "spawnflags": "1",
-    "ontrigger": "!activator,addoutput,targetname default,0.13,-1",
+    pub model: &'a str,
+    pub startdisabled: "0",
+    pub wait: "0.01",
+    pub spawnflags: u32,
+    pub ontrigger: "!activator,addoutput,targetname default,0.13,-1",
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FilterMulti{
-    "targetname": "1multi",
-    "filter02": "filt_2",
+    pub targetname: &'a str,
+    pub filter02: "filt_2",
     pub origin:Vector,
-    "negated": "0",
-    "filter01": "filt_1",
-    //"hammerid": "49342",
-    "filtertype": "1"
+    pub negated: "0",
+    pub filter01: "filt_1",
+    //pub hammerid: "49342",
+    pub filtertype: "1"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PropPhysicsOverride{
 	pub origin:Vector,
-    "spawnflags": "524",
-    "skin": "0",
-    "nodamageforces": "0",
-    "performancemode": "0",
-    "minhealthdmg": "0",
-    "fadescale": "1",
-    "exploderadius": "0",
-    "explodedamage": "0",
-    "damagetype": "0",
+    pub spawnflags: u32,
+    pub skin: "0",
+    pub nodamageforces: "0",
+    pub performancemode: "0",
+    pub minhealthdmg: "0",
+    pub fadescale: "1",
+    pub exploderadius: "0",
+    pub explodedamage: "0",
+    pub damagetype: "0",
     pub angles:Vector,
-    //"hammerid": "89676",
-    "inertiascale": "1.0",
-    "forcetoenablemotion": "0",
-    "model": "models/weapons/w_snip_scout.mdl",
-    "massscale": "0",
-    "maxdxlevel": "0",
-    "fademindist": "-1",
-    "fademaxdist": "0",
-    "damagetoenablemotion": "0",
-    "parentname": "scoutrotator",
-    "shadowcastdist": "0",
-    "health": "0",
-    "disableshadows": "0",
-    "pressuredelay": "0",
-    "mindxlevel": "0",
-    "physdamagescale": "0.1"
+    //pub hammerid: "89676",
+    pub inertiascale: "1.0",
+    pub forcetoenablemotion: "0",
+    pub model: &'a str,
+    pub massscale: "0",
+    pub maxdxlevel: "0",
+    pub fademindist: "-1",
+    pub fademaxdist: "0",
+    pub damagetoenablemotion: "0",
+    pub parentname: "scoutrotator",
+    pub shadowcastdist: "0",
+    pub health: "0",
+    pub disableshadows: "0",
+    pub pressuredelay: "0",
+    pub mindxlevel: "0",
+    pub physdamagescale: "0.1"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PointServercommand{
     pub origin:Vector,
-    "targetname": "servcommand",
-    //"hammerid": "90371"
+    pub targetname: &'a str,
+    //pub hammerid: "90371"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PointClientcommand{
-    "targetname": "clientcommand",
-    //"hammerid": "90377",
+    pub targetname: &'a str,
+    //pub hammerid: "90377",
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct GameWeaponManager{
-    "weaponname": "weapon_mp5navy",
-    "maxpieces": "0",
+    pub weaponname: "weapon_mp5navy",
+    pub maxpieces: "0",
     pub origin:Vector,
-    "ammomod": "1",
-    //"hammerid": "90603"
+    pub ammomod: "1",
+    //pub hammerid: "90603"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FilterActivatorClass{
 	pub origin:Vector,
-    "targetname": "hegrenade",
-    "negated": "allow entities that match criteria",
-    "filterclass": "hegrenade_projectile",
-    //"hammerid": "91384",
+    pub targetname: &'a str,
+    pub negated: "allow entities that match criteria",
+    pub filterclass: "hegrenade_projectile",
+    //pub hammerid: "91384",
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PlayerSpeedmod{
-	//"hammerid": "91426",
+	//pub hammerid: "91426",
     pub origin:Vector,
-    "spawnflags": "0",
-    "targetname": "speed"
+    pub spawnflags: u32,
+    pub targetname: &'a str,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvFire{
-    "spawnflags": "31",
-    "startdisabled": "0",
-    "ignitionpoint": "32",
-    "health": "1",
+    pub spawnflags: u32,
+    pub startdisabled: "0",
+    pub ignitionpoint: "32",
+    pub health: "1",
     pub origin:Vector,
-    "damagescale": "1.0",
-    //"hammerid": "101536",
-    "firesize": "64",
-    "firetype": "0",
-    "fireattack": "4"
+    pub damagescale: "1.0",
+    //pub hammerid: "101536",
+    pub firesize: "64",
+    pub firetype: "0",
+    pub fireattack: "4"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PlayerWeaponstrip{
-    "targetname": "strip",
-    //"hammerid": "107702",
+    pub targetname: &'a str,
+    //pub hammerid: "107702",
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncBuyzone{
-    "teamnum": "2",
-    "model": "*542",
-    //"hammerid": "113521"
+    pub teamnum: "2",
+    pub model: &'a str,
+    //pub hammerid: "113521"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvSoundscape{
-    "startdisabled": "0",
-    //"hammerid": "133638",
+    pub startdisabled: "0",
+    //pub hammerid: "133638",
     pub origin:Vector,
-    "radius": "848",
-    "soundscape": "lego1"
+    pub radius: "848",
+    pub soundscape: "lego1"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvSprite{
-    "glowproxysize": "2.0",
-    "rendermode": "0",
-    "mindxlevel": "0",
-    "framerate": "10.0",
-    //"hammerid": "134683",
-    "maxdxlevel": "0",
-    "hdrcolorscale": "1.0",
+    pub glowproxysize: "2.0",
+    pub rendermode: "0",
+    pub mindxlevel: "0",
+    pub framerate: "10.0",
+    //pub hammerid: "134683",
+    pub maxdxlevel: "0",
+    pub hdrcolorscale: f32,
     pub origin:Vector,
-    "renderamt": "255",
-    "disablereceiveshadows": "0",
-    "model": "lego/longjumps.vmt",
-    "spawnflags": "1",
-    "renderfx": "0",
-    "rendercolor": "255 255 255",
+    pub renderamt: "255",
+    pub disablereceiveshadows: "0",
+    pub model: &'a str,
+    pub spawnflags: u32,
+    pub renderfx: "0",
+    pub rendercolor: "255 255 255",
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct MathCounter{
-    "startdisabled": "0",
-    "targetname": "counter",
-    "max": "1",
+    pub startdisabled: "0",
+    pub targetname: &'a str,
+    pub max: "1",
     pub origin:Vector,
-    "onhitmax": "!self,disable,,0,1",
-    //"hammerid": "134898",
-    "startvalue": "0",
-    "min": "0"
+    pub onhitmax: "!self,disable,,0,1",
+    //pub hammerid: "134898",
+    pub startvalue: "0",
+    pub min: "0"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponKnife{
     pub angles:Vector,
-    //"hammerid": "176620",
-    "spawnflags": "1",
-    "targetname": "noobknife",
+    //pub hammerid: "176620",
+    pub spawnflags: u32,
+    pub targetname: &'a str,
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvEntityMaker{
-    "entitytemplate": "noobtemplate",
+    pub entitytemplate: "noobtemplate",
     pub angles:Vector,
-    //"hammerid": "176738",
-    "spawnflags": "0",
-    "postspawndirection": "0 0 0",
+    //pub hammerid: "176738",
+    pub spawnflags: u32,
+    pub postspawndirection: "0 0 0",
     pub origin:Vector,
-    "targetname": "noobmaker",
-    "postspawninheritangles": "0",
-    "postspawndirectionvariance": "0.15",
-    "postspawnspeed": "0"
+    pub targetname: &'a str,
+    pub postspawninheritangles: "0",
+    pub postspawndirectionvariance: "0.15",
+    pub postspawnspeed: "0"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvSoundscapeTriggerable{
-    "soundscape": "lego2",
-    "radius": "128",
-    //"hammerid": "179655",
-    "startdisabled": "0",
-    "targetname": "first",
+    pub soundscape: "lego2",
+    pub radius: "128",
+    //pub hammerid: "179655",
+    pub startdisabled: "0",
+    pub targetname: &'a str,
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvHudhint{
 	pub origin:Vector,
-    "spawnflags": "0",
-    //"hammerid": "183578",
-    "targetname": "quickrestart",
-    "message": "press e to restart the map"
+    pub spawnflags: u32,
+    //pub hammerid: "183578",
+    pub targetname: &'a str,
+    pub message: "press e to restart the map"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PropDynamic{
-    "solid": "0",
-    "mindxlevel": "0",
-    "rendercolor": "255 255 255",
-    "disableshadows": "0",
-    //"hammerid": "190009",
-    "randomanimation": "0",
-    "explodedamage": "0",
+    pub solid: "0",
+    pub mindxlevel: "0",
+    pub rendercolor: "255 255 255",
+    pub disableshadows: "0",
+    //pub hammerid: "190009",
+    pub randomanimation: "0",
+    pub explodedamage: "0",
     pub angles:Vector,
-    "pressuredelay": "0",
-    "disablebonefollowers": "1",
-    "rendermode": "0",
-    "exploderadius": "0",
-    "fadescale": "1",
-    "spawnflags": "0",
-    "renderfx": "0",
-    "renderamt": "255",
-    "performancemode": "0",
-    "maxanimtime": "10",
-    "skin": "0",
-    "disablereceiveshadows": "0",
-    "model": "models/player/slow/banana_joe/slow.mdl",
-    "fademindist": "-1",
-    "setbodygroup": "0",
-    "fademaxdist": "0",
+    pub pressuredelay: "0",
+    pub disablebonefollowers: "1",
+    pub rendermode: "0",
+    pub exploderadius: "0",
+    pub fadescale: "1",
+    pub spawnflags: u32,
+    pub renderfx: "0",
+    pub renderamt: "255",
+    pub performancemode: "0",
+    pub maxanimtime: "10",
+    pub skin: "0",
+    pub disablereceiveshadows: "0",
+    pub model: &'a str,
+    pub fademindist: "-1",
+    pub setbodygroup: "0",
+    pub fademaxdist: "0",
     pub origin:Vector,
-    "minanimtime": "5",
-    "maxdxlevel": "0",
-    "startdisabled": "0"
+    pub minanimtime: "5",
+    pub maxdxlevel: "0",
+    pub startdisabled: "0"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct Infodecal{
-    "texture": "decals/decalgraffiti044a",
-    //"hammerid": "3739",
+    pub texture: &'a str,
+    //pub hammerid: "3739",
     pub angles:Vector,
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct TriggerSoundscape{
-    "startdisabled": "0",
-    "soundscape": "nuke.abomb",
-    "model": "*407",
+    pub startdisabled: "0",
+    pub soundscape: "nuke.abomb",
+    pub model: &'a str,
     pub origin:Vector,
-    "spawnflags": "1",
-    //"hammerid": "7740"
+    pub spawnflags: u32,
+    //pub hammerid: "7740"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvSpark{
-    "spawnflags": "0",
-    "targetname": "spark1",
-    "maxdelay": "0",
-    "magnitude": "1",
+    pub spawnflags: u32,
+    pub targetname: &'a str,
+    pub maxdelay: "0",
+    pub magnitude: "1",
     pub angles:Vector,
-    //"hammerid": "34153",
+    //pub hammerid: "34153",
     pub origin:Vector,
-    "traillength": "1"
+    pub traillength: "1"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct LogicTimer{
-    "spawnflags": "0",
-    "userandomtime": "1",
-    "lowerrandombound": "12",
-    "startdisabled": "0",
-    //"hammerid": "34188",
-    "ontimer": "spark1,sparkonce,,0,-1",
-    "upperrandombound": "20",
+    pub spawnflags: u32,
+    pub userandomtime: "1",
+    pub lowerrandombound: "12",
+    pub startdisabled: "0",
+    //pub hammerid: "34188",
+    pub ontimer: "spark1,sparkonce,,0,-1",
+    pub upperrandombound: "20",
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PropPhysicsMultiplayer{
-    "fadescale": "1",
-    "renderfx": "0",
-    "spawnflags": "256",
-    "fademaxdist": "1200",
-    "physicsmode": "0",
-    "inertiascale": "1.0",
-    "massscale": "0",
-    "shadowcastdist": "0",
-    "explodedamage": "0",
-    "rendercolor": "255 255 255",
-    "disableshadows": "1",
-    "disablereceiveshadows": "1",
+    pub fadescale: "1",
+    pub renderfx: "0",
+    pub spawnflags: u32,
+    pub fademaxdist: "1200",
+    pub physicsmode: "0",
+    pub inertiascale: "1.0",
+    pub massscale: "0",
+    pub shadowcastdist: "0",
+    pub explodedamage: "0",
+    pub rendercolor: "255 255 255",
+    pub disableshadows: "1",
+    pub disablereceiveshadows: "1",
     pub angles:Vector,
-    "performancemode": "0",
-    "mindxlevel": "0",
-    "renderamt": "255",
-    //"hammerid": "35774",
-    "skin": "0",
-    "rendermode": "0",
-    "minhealthdmg": "0",
-    "maxdxlevel": "0",
-    "forcetoenablemotion": "0",
-    "physdamagescale": "0.1",
-    "exploderadius": "0",
-    "damagetype": "0",
-    "model": "models/props_c17/oildrum001.mdl",
+    pub performancemode: "0",
+    pub mindxlevel: "0",
+    pub renderamt: "255",
+    //pub hammerid: "35774",
+    pub skin: "0",
+    pub rendermode: "0",
+    pub minhealthdmg: "0",
+    pub maxdxlevel: "0",
+    pub forcetoenablemotion: "0",
+    pub physdamagescale: "0.1",
+    pub exploderadius: "0",
+    pub damagetype: "0",
+    pub model: &'a str,
     pub origin:Vector,
-    "pressuredelay": "0",
-    "nodamageforces": "0",
-    "fademindist": "1000",
-    "damagetoenablemotion": "0",
+    pub pressuredelay: "0",
+    pub nodamageforces: "0",
+    pub fademindist: "1000",
+    pub damagetoenablemotion: "0",
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvWind{
 	pub origin:Vector,
-    "maxgustdelay": "20",
-    "mingustdelay": "10",
-    "maxgust": "250",
-    "minwind": "20",
-    "gustduration": "5",
-    "mingust": "100",
+    pub maxgustdelay: "20",
+    pub mingustdelay: "10",
+    pub maxgust: "250",
+    pub minwind: "20",
+    pub gustduration: "5",
+    pub mingust: "100",
     pub angles:Vector,
-    //"hammerid": "38005",
-    "maxwind": "50",
-    "gustdirchange": "20",
+    //pub hammerid: "38005",
+    pub maxwind: "50",
+    pub gustdirchange: "20",
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvDetailController{
-    //"hammerid": "207110",
+    //pub hammerid: "207110",
     pub origin:Vector,
-    "fademindist": "200",
-    "fademaxdist": "350",
+    pub fademindist: "200",
+    pub fademaxdist: "350",
     pub angles:Vector,
 }
 
@@ -1045,732 +1045,732 @@ pub struct EnvDetailController{
 pub struct InfoPlayerStart{
 	pub angles:Vector,
     pub origin:Vector,
-    //"hammerid": "259724",
-    "spawnflags": "0"
+    //pub hammerid: "259724",
+    pub spawnflags: u32"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PropPhysics{
-    "pressuredelay": "0",
-    "explodedamage": "0",
-    "damagetoenablemotion": "0",
-    "inertiascale": "1.0",
-    "spawnflags": "14",
-    "performancemode": "0",
-    "forcetoenablemotion": "0",
-    "fademindist": "2000",
-    "minhealthdmg": "0",
-    "disablereceiveshadows": "0",
-    "disableshadows": "0",
-    "exploderadius": "0",
-    "renderfx": "0",
-    "mindxlevel": "0",
-    "massscale": "0",
-    "physdamagescale": "0.1",
-    "shadowcastdist": "0",
+    pub pressuredelay: "0",
+    pub explodedamage: "0",
+    pub damagetoenablemotion: "0",
+    pub inertiascale: "1.0",
+    pub spawnflags: u32,
+    pub performancemode: "0",
+    pub forcetoenablemotion: "0",
+    pub fademindist: "2000",
+    pub minhealthdmg: "0",
+    pub disablereceiveshadows: "0",
+    pub disableshadows: "0",
+    pub exploderadius: "0",
+    pub renderfx: "0",
+    pub mindxlevel: "0",
+    pub massscale: "0",
+    pub physdamagescale: "0.1",
+    pub shadowcastdist: "0",
     pub origin:Vector,
-    //"hammerid": "487103",
-    "damagetype": "0",
-    "fadescale": "1",
-    "rendermode": "0",
-    "renderamt": "255",
-    "skin": "0",
-    "model": "models/props_debris/concrete_cynderblock001.mdl",
-    "nodamageforces": "1",
+    //pub hammerid: "487103",
+    pub damagetype: "0",
+    pub fadescale: "1",
+    pub rendermode: "0",
+    pub renderamt: "255",
+    pub skin: "0",
+    pub model: &'a str,
+    pub nodamageforces: "1",
     pub angles:Vector,
-    "fademaxdist": "2100",
-    "rendercolor": "255 255 255",
-    "maxdxlevel": "0"
+    pub fademaxdist: "2100",
+    pub rendercolor: "255 255 255",
+    pub maxdxlevel: "0"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponAk47{
     pub angles:Vector,
-    "targetname": "ak1_2",
-    "ammo": "1337",
+    pub targetname: &'a str,
+    pub ammo: u32,
     pub origin:Vector,
-    "spawnflags": "1",
-    //"hammerid": "155595"
+    pub spawnflags: u32,
+    //pub hammerid: "155595"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncMovelinear{
-    "disablereceiveshadows": "0",
-    "renderfx": "0",
+    pub disablereceiveshadows: "0",
+    pub renderfx: "0",
     pub origin:Vector,
-    "rendermode": "3",
-    "parentname": "ak2_1",
-    "rendercolor": "255 255 255",
-    "blockdamage": "0",
-    "model": "*616",
-    "movedir": "0 0 0",
-    "speed": "100",
-    //"hammerid": "155597",
-    "renderamt": "255",
-    "spawnflags": "8",
-    "startposition": "0",
-    "movedistance": "100"
+    pub rendermode: "3",
+    pub parentname: "ak2_1",
+    pub rendercolor: "255 255 255",
+    pub blockdamage: "0",
+    pub model: &'a str,
+    pub movedir: "0 0 0",
+    pub speed: "100",
+    //pub hammerid: "155597",
+    pub renderamt: "255",
+    pub spawnflags: u32,
+    pub startposition: "0",
+    pub movedistance: "100"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncPrecipitation{
-	//"hammerid": "288365",
-    "renderamt": "100",
-    "preciptype": "3",
-    "rendercolor": "100 100 100",
-    "model": "*1"
+	//pub hammerid: "288365",
+    pub renderamt: "100",
+    pub preciptype: "3",
+    pub rendercolor: "100 100 100",
+    pub model: &'a str"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvLightglow{
-    "hdrcolorscale": "0.5",
+    pub hdrcolorscale: f32,
     pub origin:Vector,
     pub angles:Vector,
-    "horizontalglowsize": "8",
-    "verticalglowsize": "8",
-    "maxdist": "256",
-    //"hammerid": "156600",
-    "outermaxdist": "0",
-    "spawnflags": "0",
-    "glowproxysize": "0",
-    "mindist": "64",
-    "rendercolor": "255 255 255"
+    pub horizontalglowsize: "8",
+    pub verticalglowsize: "8",
+    pub maxdist: "256",
+    //pub hammerid: "156600",
+    pub outermaxdist: "0",
+    pub spawnflags: u32,
+    pub glowproxysize: "0",
+    pub mindist: "64",
+    pub rendercolor: "255 255 255"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvSmokestack{
-    "rendercolor": "255 255 255",
-    "roll": "15.0",
-    "windangle": "0",
-    "twist": "2",
-    "startsize": "20",
-    "renderamt": "160",
-    "basespread": "125",
+    pub rendercolor: "255 255 255",
+    pub roll: "15.0",
+    pub windangle: "0",
+    pub twist: "2",
+    pub startsize: "20",
+    pub renderamt: "160",
+    pub basespread: "125",
     pub angles:Vector,
-    "initialstate": "1",
-    "jetlength": "200",
-    "endsize": "30",
-    "windspeed": "4",
-    "smokematerial": "particle/smokestack.vmt",
+    pub initialstate: "1",
+    pub jetlength: "200",
+    pub endsize: "30",
+    pub windspeed: "4",
+    pub smokematerial: "particle/smokestack.vmt",
     pub origin:Vector,
-    "rate": "20",
-    "spreadspeed": "15",
-    //"hammerid": "129270",
-    "speed": "30"
+    pub rate: "20",
+    pub spreadspeed: "15",
+    //pub hammerid: "129270",
+    pub speed: "30"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncSmokevolume{
-    "color2": "192 192 192",
-    "particledrawwidth": "192",
-    //"hammerid": "31779",
-    "particlespacingdistance": "80",
-    "color1": "192 192 192",
-    "spawnflags": "0",
-    "rotationspeed": "10",
-    "movementspeed": "10",
-    "material": "particle/particle_noisesphere",
-    "densityrampspeed": "1",
-    "density": "0.5",
-    "model": "*73"
+    pub color2: "192 192 192",
+    pub particledrawwidth: "192",
+    //pub hammerid: "31779",
+    pub particlespacingdistance: "80",
+    pub color1: "192 192 192",
+    pub spawnflags: u32,
+    pub rotationspeed: "10",
+    pub movementspeed: "10",
+    pub material: "particle/particle_noisesphere",
+    pub densityrampspeed: "1",
+    pub density: "0.5",
+    pub model: &'a str"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvEmbers{
 	pub angles:Vector,
-    "spawnflags": "1",
-    //"hammerid": "363584",
-    "model": "*356",
-    "speed": "150.0",
-    "lifetime": "8",
-    "rendercolor": "255 128 0",
-    "density": "32"
+    pub spawnflags: u32,
+    //pub hammerid: "363584",
+    pub model: &'a str,
+    pub speed: "150.0",
+    pub lifetime: "8",
+    pub rendercolor: "255 128 0",
+    pub density: "32"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncDustcloud{
-    "frozen": "0",
-    "sizemax": "150",
-    "startdisabled": "0",
-    //"hammerid": "370009",
-    "lifetimemin": "3",
-    "lifetimemax": "5",
-    "color": "128 128 128",
-    "distmax": "1024",
-    "alpha": "96",
-    "model": "*367",
-    "speedmax": "6",
-    "sizemin": "50",
-    "spawnrate": "500"
+    pub frozen: "0",
+    pub sizemax: "150",
+    pub startdisabled: "0",
+    //pub hammerid: "370009",
+    pub lifetimemin: "3",
+    pub lifetimemax: "5",
+    pub color: "128 128 128",
+    pub distmax: "1024",
+    pub alpha: "96",
+    pub model: &'a str,
+    pub speedmax: "6",
+    pub sizemin: "50",
+    pub spawnrate: "500"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct TriggerOnce{
 	pub origin:Vector,
-    "model": "*398",
-    //"hammerid": "387965",
+    pub model: &'a str,
+    //pub hammerid: "387965",
     pub angles:Vector,
-    "startdisabled": "0",
-    "ontrigger": "servercommand,command,say level 5 unlocked,0,-1",
-    "spawnflags": "1"
+    pub startdisabled: "0",
+    pub ontrigger: "servercommand,command,say level 5 unlocked,0,-1",
+    pub spawnflags: u32"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PointSpotlight{
-    "hdrcolorscale": "0.5",
+    pub hdrcolorscale: f32,
     pub angles:Vector,
-    "spotlightlength": "200.0",
-    "spotlightwidth": "20.0",
-    "renderamt": "255",
-    "targetname": "scout_spotlight",
-    "spawnflags": "3",
+    pub spotlightlength: "200.0",
+    pub spotlightwidth: "20.0",
+    pub renderamt: "255",
+    pub targetname: &'a str,
+    pub spawnflags: u32,
     pub origin:Vector,
-    "rendercolor": "255 255 255",
-    //"hammerid": "393222"
+    pub rendercolor: "255 255 255",
+    //pub hammerid: "393222"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponTmp{
-    "maxdxlevel": "0",
+    pub maxdxlevel: "0",
     pub angles:Vector,
-    "fadescale": "1.0",
-    "renderfx": "0",
-    "shadowcastdist": "0",
-    //"hammerid": "402780",
-    "fademindist": "-1.0",
-    "mindxlevel": "0",
-    "rendermode": "0",
-    "renderamt": "255",
-    "rendercolor": "255 255 255",
-    "fademaxdist": "0.0",
+    pub fadescale: "1.0",
+    pub renderfx: "0",
+    pub shadowcastdist: "0",
+    //pub hammerid: "402780",
+    pub fademindist: "-1.0",
+    pub mindxlevel: "0",
+    pub rendermode: "0",
+    pub renderamt: "255",
+    pub rendercolor: "255 255 255",
+    pub fademaxdist: "0.0",
     pub origin:Vector,
-    "spawnflags": "1",
-    "nodamageforces": "0",
-    "ammo": "120"
+    pub spawnflags: u32,
+    pub nodamageforces: "0",
+    pub ammo: u32
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponXm1014{
-    "renderfx": "0",
-    "rendercolor": "255 255 255",
-    //"hammerid": "402832",
-    "spawnflags": "1",
-    "mindxlevel": "0",
-    "ammo": "32",
-    "nodamageforces": "0",
-    "renderamt": "255",
+    pub renderfx: "0",
+    pub rendercolor: "255 255 255",
+    //pub hammerid: "402832",
+    pub spawnflags: u32,
+    pub mindxlevel: "0",
+    pub ammo: u32,
+    pub nodamageforces: "0",
+    pub renderamt: "255",
     pub origin:Vector,
-    "fademaxdist": "0.0",
-    "rendermode": "0",
-    "maxdxlevel": "0",
-    "fadescale": "1.0",
-    "shadowcastdist": "0",
-    "fademindist": "-1.0",
+    pub fademaxdist: "0.0",
+    pub rendermode: "0",
+    pub maxdxlevel: "0",
+    pub fadescale: "1.0",
+    pub shadowcastdist: "0",
+    pub fademindist: "-1.0",
     pub angles:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponMac10{
-    "spawnflags": "1",
-    "rendermode": "0",
-    "fademindist": "-1.0",
-    "ammo": "100",
+    pub spawnflags: u32,
+    pub rendermode: "0",
+    pub fademindist: "-1.0",
+    pub ammo: u32,
     pub angles:Vector,
-    "shadowcastdist": "0",
-    "rendercolor": "255 255 255",
-    "fademaxdist": "0.0",
-    //"hammerid": "403143",
+    pub shadowcastdist: "0",
+    pub rendercolor: "255 255 255",
+    pub fademaxdist: "0.0",
+    //pub hammerid: "403143",
     pub origin:Vector,
-    "renderamt": "255",
-    "renderfx": "0",
-    "nodamageforces": "0",
-    "mindxlevel": "0",
-    "fadescale": "1.0",
-    "maxdxlevel": "0"
+    pub renderamt: "255",
+    pub renderfx: "0",
+    pub nodamageforces: "0",
+    pub mindxlevel: "0",
+    pub fadescale: "1.0",
+    pub maxdxlevel: "0"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponUmp45{
-    "rendermode": "0",
-    "spawnflags": "1",
-    "shadowcastdist": "0",
-    "renderfx": "0",
-    "fademaxdist": "0.0",
-    //"hammerid": "403301",
-    "ammo": "100",
-    "mindxlevel": "0",
-    "renderamt": "255",
+    pub rendermode: "0",
+    pub spawnflags: u32,
+    pub shadowcastdist: "0",
+    pub renderfx: "0",
+    pub fademaxdist: "0.0",
+    //pub hammerid: "403301",
+    pub ammo: u32,
+    pub mindxlevel: "0",
+    pub renderamt: "255",
     pub origin:Vector,
-    "nodamageforces": "0",
-    "fademindist": "-1.0",
+    pub nodamageforces: "0",
+    pub fademindist: "-1.0",
     pub angles:Vector,
-    "maxdxlevel": "0",
-    "fadescale": "1.0",
-    "rendercolor": "255 255 255"
+    pub maxdxlevel: "0",
+    pub fadescale: "1.0",
+    pub rendercolor: "255 255 255"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponFamas{
-	//"hammerid": "403360",
-    "shadowcastdist": "0",
-    "renderfx": "0",
-    "rendermode": "0",
-    "nodamageforces": "0",
+	//pub hammerid: "403360",
+    pub shadowcastdist: "0",
+    pub renderfx: "0",
+    pub rendermode: "0",
+    pub nodamageforces: "0",
     pub origin:Vector,
-    "fademaxdist": "0.0",
-    "maxdxlevel": "0",
-    "renderamt": "255",
-    "mindxlevel": "0",
+    pub fademaxdist: "0.0",
+    pub maxdxlevel: "0",
+    pub renderamt: "255",
+    pub mindxlevel: "0",
     pub angles:Vector,
-    "fadescale": "1.0",
-    "spawnflags": "1",
-    "rendercolor": "255 255 255",
-    "fademindist": "-1.0",
-    "ammo": "90"
+    pub fadescale: "1.0",
+    pub spawnflags: u32,
+    pub rendercolor: "255 255 255",
+    pub fademindist: "-1.0",
+    pub ammo: u32
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponG3Sg1{
 	pub angles:Vector,
-    "nodamageforces": "0",
-    "rendermode": "0",
-    "renderfx": "0",
-    "fademaxdist": "0.0",
-    "spawnflags": "1",
-    "fadescale": "1.0",
-    "ammo": "90",
-    //"hammerid": "403518",
-    "renderamt": "255",
-    "fademindist": "-1.0",
+    pub nodamageforces: "0",
+    pub rendermode: "0",
+    pub renderfx: "0",
+    pub fademaxdist: "0.0",
+    pub spawnflags: u32,
+    pub fadescale: "1.0",
+    pub ammo: u32,
+    //pub hammerid: "403518",
+    pub renderamt: "255",
+    pub fademindist: "-1.0",
     pub origin:Vector,
-    "mindxlevel": "0",
-    "rendercolor": "255 255 255",
-    "shadowcastdist": "0",
-    "maxdxlevel": "0",
+    pub mindxlevel: "0",
+    pub rendercolor: "255 255 255",
+    pub shadowcastdist: "0",
+    pub maxdxlevel: "0",
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponSg550{
-    "renderamt": "255",
-    //"hammerid": "403621",
+    pub renderamt: "255",
+    //pub hammerid: "403621",
     pub origin:Vector,
-    "maxdxlevel": "0",
-    "fadescale": "1.0",
-    "renderfx": "0",
-    "rendermode": "0",
-    "spawnflags": "1",
-    "nodamageforces": "0",
-    "fademaxdist": "0.0",
-    "rendercolor": "255 255 255",
-    "mindxlevel": "0",
-    "ammo": "90",
+    pub maxdxlevel: "0",
+    pub fadescale: "1.0",
+    pub renderfx: "0",
+    pub rendermode: "0",
+    pub spawnflags: u32,
+    pub nodamageforces: "0",
+    pub fademaxdist: "0.0",
+    pub rendercolor: "255 255 255",
+    pub mindxlevel: "0",
+    pub ammo: u32,
     pub angles:Vector,
-    "fademindist": "-1.0",
-    "shadowcastdist": "0"
+    pub fademindist: "-1.0",
+    pub shadowcastdist: "0"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponFlashbang{
 	pub origin:Vector,
-    "fademindist": "-1.0",
-    "spawnflags": "0",
-    //"hammerid": "416160",
-    "renderamt": "255",
-    "fadescale": "1.0",
-    "fademaxdist": "0.0",
+    pub fademindist: "-1.0",
+    pub spawnflags: u32,
+    //pub hammerid: "416160",
+    pub renderamt: "255",
+    pub fadescale: "1.0",
+    pub fademaxdist: "0.0",
     pub angles:Vector,
-    "targetname": "flashbang",
-    "rendercolor": "255 255 255"
+    pub targetname: &'a str,
+    pub rendercolor: "255 255 255"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvFireTrail{
-    "targetname": "uber_scout_fire",
-    //"hammerid": "425179",
+    pub targetname: &'a str,
+    //pub hammerid: "425179",
     pub origin:Vector,
-    "parentname": "uber_scout"
+    pub parentname: "uber_scout"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct InfoLadder{
-    "maxs.y": "3528.00",
-    "mins.z": "112.00",
-    //"hammerid": "2854",
-    "maxs.x": "-9792.00",
-    "mins.y": "3520.00",
-    "maxs.z": "640.00",
-    "mins.x": "-9856.00"
+    "maxspub y: "3528.00",
+    "minspub z: "112.00",
+    //pub hammerid: "2854",
+    "maxspub x: "-9792.00",
+    "minspub y: "3520.00",
+    "maxspub z: "640.00",
+    "minspub x: "-9856.00"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponM3{
-    "ammo": "999",
-    //"hammerid": "176561",
+	pub ammo: u32,
+//pub hammerid: "176561",
     pub angles:Vector,
-    "spawnflags": "1",
-    "targetname": "gun",
+    pub spawnflags: u32,
+    pub targetname: &'a str,
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponFiveseven{
 	pub origin:Vector,
-    "ammo": "999",
-    //"hammerid": "177007",
-    "targetname": "gun6",
-    "spawnflags": "1",
+    pub ammo: u32,
+    //pub hammerid: "177007",
+    pub targetname: &'a str,
+    pub spawnflags: u32,
     pub angles:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct MoveRope{
-    "spawnflags": "0",
-    "barbed": "0",
-    "slack": "105",
-    "nowind": "1",
+	pub spawnflags: u32,
+	pub barbed: "0",
+	pub slack: "105",
+	pub nowind: "1",
     pub origin:Vector,
-    "subdiv": "4",
-    "movespeed": "64",
-    "width": "1",
-    "positioninterpolator": "2",
-    "mindxlevel": "0",
-    "ropematerial": "cable/cable",
-    "texturescale": "1",
-    "collide": "0",
-    //"hammerid": "129625",
+    pub subdiv: "4",
+    pub movespeed: "64",
+    pub width: "1",
+    pub positioninterpolator: "2",
+    pub mindxlevel: "0",
+    pub ropematerial: "cable/cable",
+    pub texturescale: "1",
+    pub collide: "0",
+    //pub hammerid: "129625",
     pub angles:Vector,
-    "breakable": "0",
-    "type": "0",
-    "maxdxlevel": "0",
-    "dangling": "0",
-    "targetname": "rope_20",
+    pub breakable: "0",
+    pub type: "0",
+    pub maxdxlevel: "0",
+    pub dangling: "0",
+    pub targetname: &'a str,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvFade{
-    "spawnflags": "4",
-    "rendercolor": "0 0 0",
+	pub spawnflags: u32,
+	pub rendercolor: "0 0 0",
     pub origin:Vector,
-    //"hammerid": "262982",
-    "duration": "3",
-    "holdtime": "0.0",
-    "renderamt": "255",
-    "targetname": "fadelj1"
+    //pub hammerid: "262982",
+    pub duration: "3",
+    pub holdtime: "0.0",
+    pub renderamt: "255",
+    pub targetname: &'a str,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncAreaportalwindow{
-    "translucencylimit": "0.0",
-    "fadestartdist": "1950",
-    "fadedist": "2000",
-    "portalnumber": "1",
-    "target": "brush_a",
-    "portalversion": "1",
-    //"hammerid": "270454"
+	pub translucencylimit: "0.0",
+	pub fadestartdist: "1950",
+	pub fadedist: "2000",
+	pub portalnumber: "1",
+	pub target: &'a str,
+	pub portalversion: "1",
+	//pub hammerid: "270454"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvLaser{
-    "texturescroll": "35",
-    "dissolvetype": "none",
-    "lasertarget": "las_target2",
-    "width": "4",
-    "rendercolor": "0 128 255",
-    "renderamt": "100",
-    "texture": "sprites/laserbeam.spr",
-    "damage": "0",
-    //"hammerid": "731916",
+    pub texturescroll: "35",
+    pub dissolvetype: "none",
+    pub lasertarget: &'a str,
+    pub width: "4",
+    pub rendercolor: "0 128 255",
+    pub renderamt: "100",
+    pub texture: &'a str,
+    pub damage: "0",
+    //pub hammerid: "731916",
     pub origin:Vector,
-    "spawnflags": "1"
+    pub spawnflags: u32"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct LogicRelay{
 	pub origin:Vector,
-    //"hammerid": "805602",
-    "ontrigger": "snek_btn_1,kill,,0,-1",
-    "targetname": "snake_relay1",
-    "spawnflags": "1"
+    //pub hammerid: "805602",
+    pub ontrigger: "snek_btn_1,kill,,0,-1",
+    pub targetname: &'a str,
+    pub spawnflags: u32"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PathTrack{
-    "orientationtype": "1",
+    pub orientationtype: "1",
     pub angles:Vector,
-    "spawnflags": "0",
-    "target": "vr_track1_2",
-    //"hammerid": "30225",
-    "targetname": "vr_track1_1",
+    pub spawnflags: u32,
+    pub target: &'a str,
+    //pub hammerid: "30225",
+    pub targetname: &'a str,
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncTracktrain{
-    "velocitytype": "1",
-    "rendermode": "0",
-    "orientationtype": "1",
-    "movesoundmaxpitch": "200",
-    "movesoundmintime": "0",
-    "height": "4",
-    "target": "vr_track1_1",
-    "speed": "100",
-    "dmg": "0",
-    "renderamt": "255",
-    "targetname": "vr_train1",
-    "movesound": "ambient/atmosphere/city_beacon_loop1.wav",
-    "disablereceiveshadows": "1",
-    "movesoundminpitch": "60",
-    //"hammerid": "30270",
-    "rendercolor": "255 255 255",
-    "volume": "10",
-    "wheels": "50",
-    "bank": "0",
-    "model": "*105",
-    "spawnflags": "538",
-    "movesoundmaxtime": "0",
-    "disableshadows": "1",
+    pub velocitytype: "1",
+    pub rendermode: "0",
+    pub orientationtype: "1",
+    pub movesoundmaxpitch: "200",
+    pub movesoundmintime: "0",
+    pub height: "4",
+    pub target: &'a str,
+    pub speed: "100",
+    pub dmg: "0",
+    pub renderamt: "255",
+    pub targetname: &'a str,
+    pub movesound: "ambient/atmosphere/city_beacon_loop1.wav",
+    pub disablereceiveshadows: "1",
+    pub movesoundminpitch: "60",
+    //pub hammerid: "30270",
+    pub rendercolor: "255 255 255",
+    pub volume: "10",
+    pub wheels: "50",
+    pub bank: "0",
+    pub model: &'a str,
+    pub spawnflags: u32,
+    pub movesoundmaxtime: "0",
+    pub disableshadows: "1",
     pub origin:Vector,
-    "renderfx": "0",
-    "startspeed": "100"
+    pub renderfx: "0",
+    pub startspeed: "100"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvSteam{
-    "rate": "26",
-    "spawnflags": "0",
-    "speed": "120",
-    "startsize": "10",
-    "renderamt": "255",
-    "endsize": "25",
-    "targetname": "cave_steam_dream01",
-    "rollspeed": "8",
-    //"hammerid": "65082",
+    pub rate: "26",
+    pub spawnflags: u32,
+    pub speed: "120",
+    pub startsize: "10",
+    pub renderamt: "255",
+    pub endsize: "25",
+    pub targetname: &'a str,
+    pub rollspeed: "8",
+    //pub hammerid: "65082",
     pub angles:Vector,
     pub origin:Vector,
-    "rendercolor": "255 255 255",
-    "spreadspeed": "15",
-    "jetlength": "80"
+    pub rendercolor: "255 255 255",
+    pub spreadspeed: "15",
+    pub jetlength: "80"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvShake{
-    "amplitude": "6",
-    "targetname": "cave_shake01",
+    pub amplitude: "6",
+    pub targetname: &'a str,
     pub origin:Vector,
-    "duration": "4",
-    "spawnflags": "0",
-    "frequency": "2.5",
-    "radius": "375",
-    //"hammerid": "105159"
+    pub duration: "4",
+    pub spawnflags: u32,
+    pub frequency: "2.5",
+    pub radius: "375",
+    //pub hammerid: "105159"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncRotButton{
-    "distance": "90",
-    "sounds": "25",
+    pub distance: "90",
+    pub sounds: "25",
     pub angles:Vector,
     pub origin:Vector,
-    "onpressed": "water_movelin01,close,,30,-1",
-    "wait": "3",
-    "startdisabled": "0",
-    "targetname": "rot_button01",
-    "speed": "90",
-    //"hammerid": "239116",
-    "health": "0",
-    "spawnflags": "1088",
-    "model": "*496",
+    pub onpressed: "water_movelin01,close,,30,-1",
+    pub wait: "3",
+    pub startdisabled: "0",
+    pub targetname: &'a str,
+    pub speed: "90",
+    //pub hammerid: "239116",
+    pub health: "0",
+    pub spawnflags: u32,
+    pub model: &'a str,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct TriggerGravity{
-	//"hammerid": "259593",
+	//pub hammerid: "259593",
     pub origin:Vector,
-    "spawnflags": "1",
-    "model": "*562",
-    "startdisabled": "0",
-    "gravity": ".05",
+    pub spawnflags: u32,
+    pub model: &'a str,
+    pub startdisabled: "0",
+    pub gravity: ".05",
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct SkyCamera{
-    "fogdir": "1 0 0",
-    "scale": "16",
-    "fogstart": "500.0",
-    "fogend": "2000.0",
-    "fogcolor2": "255 255 255",
-    //"hammerid": "361080",
+    pub fogdir: "1 0 0",
+    pub scale: "16",
+    pub fogstart: "500.0",
+    pub fogend: "2000.0",
+    pub fogcolor2: "255 255 255",
+    //pub hammerid: "361080",
     pub angles:Vector,
-    "fogcolor": "255 255 255",
+    pub fogcolor: "255 255 255",
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct GameUi{
-    "fieldofview": "-1.0",
+    pub fieldofview: "-1.0",
     pub origin:Vector,
-    "pressedforward": "push_forward,enable,,0,-1",
-    "playeroff": "button_lvl1,addoutput,renderamt 200,0,-1",
-    "unpressedforward": "push_forward,disable,,0,-1",
-    "spawnflags": "480",
-    //"hammerid": "435027",
-    "unpressedmoveright": "push_right,disable,,0,-1",
-    "unpressedmoveleft": "push_left,disable,,0,-1",
-    "unpressedback": "push_backward,disable,,0,-1",
-    "pressedmoveright": "push_right,enable,,0,-1",
-    "pressedback": "push_backward,enable,,0,-1",
-    "pressedmoveleft": "push_left,enable,,0,-1",
-    "targetname": "ui"
+    pub pressedforward: "push_forward,enable,,0,-1",
+    pub playeroff: "button_lvl1,addoutput,renderamt 200,0,-1",
+    pub unpressedforward: "push_forward,disable,,0,-1",
+    pub spawnflags: u32,
+    //pub hammerid: "435027",
+    pub unpressedmoveright: "push_right,disable,,0,-1",
+    pub unpressedmoveleft: "push_left,disable,,0,-1",
+    pub unpressedback: "push_backward,disable,,0,-1",
+    pub pressedmoveright: "push_right,enable,,0,-1",
+    pub pressedback: "push_backward,enable,,0,-1",
+    pub pressedmoveleft: "push_left,enable,,0,-1",
+    pub targetname: &'a str,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncPhysboxMultiplayer{
-    "targetname": "box_lvl1",
-    "health": "0",
-    "disablereceiveshadows": "1",
-    "pressuredelay": "0",
-    "damagetype": "0",
-    "material": "10",
-    "preferredcarryangles": "0 0 0",
+    pub targetname: &'a str,
+    pub health: "0",
+    pub disablereceiveshadows: "1",
+    pub pressuredelay: "0",
+    pub damagetype: "0",
+    pub material: "10",
+    pub preferredcarryangles: "0 0 0",
     pub origin:Vector,
-    "exploderadius": "0",
-    "propdata": "0",
-    "model": "*614",
-    "rendermode": "0",
-    "notsolid": "0",
-    "explodemagnitude": "0",
-    "explosion": "0",
-    "gibdir": "0 0 0",
-    "renderamt": "255",
-    //"hammerid": "435046",
-    "disableshadows": "1",
-    "performancemode": "0",
-    "forcetoenablemotion": "0",
-    "_minlight": "2",
-    "rendercolor": "255 255 255",
-    "renderfx": "0",
-    "spawnflags": "524288",
-    "damagetoenablemotion": "0",
-    "spawnobject": "0",
-    "nodamageforces": "0",
-    "explodedamage": "0",
-    "massscale": "0.01"
+    pub exploderadius: "0",
+    pub propdata: "0",
+    pub model: &'a str,
+    pub rendermode: "0",
+    pub notsolid: "0",
+    pub explodemagnitude: "0",
+    pub explosion: "0",
+    pub gibdir: "0 0 0",
+    pub renderamt: "255",
+    //pub hammerid: "435046",
+    pub disableshadows: "1",
+    pub performancemode: "0",
+    pub forcetoenablemotion: "0",
+    pub _minlight: "2",
+    pub rendercolor: "255 255 255",
+    pub renderfx: "0",
+    pub spawnflags: u32,
+    pub damagetoenablemotion: "0",
+    pub spawnobject: "0",
+    pub nodamageforces: "0",
+    pub explodedamage: "0",
+    pub massscale: "0.01"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct TriggerLook{
-    "startdisabled": "0",
-    "looktime": "5",
-    //"hammerid": "491215",
-    "target": "target_look",
-    "spawnflags": "128",
-    "model": "*748",
-    "timeout": "0",
-    "fieldofview": "0.9",
-    "ontrigger": "door_pic,open,,0,-1",
+    pub startdisabled: "0",
+    pub looktime: "5",
+    //pub hammerid: "491215",
+    pub target: &'a str,
+    pub spawnflags: u32,
+    pub model: &'a str,
+    pub timeout: "0",
+    pub fieldofview: "0.9",
+    pub ontrigger: "door_pic,open,,0,-1",
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct KeyframeRope{
 	pub origin:Vector,
-    "slack": "25",
-    "texturescale": "1",
-    "ropematerial": "cable/cable.vmt",
-    "movespeed": "64",
+    pub slack: "25",
+    pub texturescale: "1",
+    pub ropematerial: "cable/cable.vmt",
+    pub movespeed: "64",
     pub angles:Vector,
-    //"hammerid": "543370",
-    "width": "2",
-    "targetname": "cave_rope02",
-    "subdiv": "2"
+    //pub hammerid: "543370",
+    pub width: "2",
+    pub targetname: &'a str,
+    pub subdiv: "2"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvShooter{
-    "m_flvariance": "0.3",
+    pub m_flvariance: "0.3",
     pub angles:Vector,
-    "renderfx": "0",
-    "rendermode": "0",
-    "m_flvelocity": "772",
+    pub renderfx: "0",
+    pub rendermode: "0",
+    pub m_flvelocity: "772",
     pub origin:Vector,
-    "parentname": "wtf_weapon",
-    "shootmodel": "models/gibs/agibs.mdl",
-    "nogibshadows": "0",
-    "spawnflags": "7",
-    "massoverride": "0",
-    "skin": "0",
-    "renderamt": "255",
-    "gibangles": "0 0 0",
-    "delay": "3",
-    "simulation": "0",
-    "targetname": "wtf_shoot",
-    "m_flgiblife": "1.5",
-    "m_igibs": "99999",
-    "gibgravityscale": "1",
-    "rendercolor": "255 255 255",
-    "disablereceiveshadows": "0",
-    "shootsounds": "-1",
-    //"hammerid": "564233"
+    pub parentname: "wtf_weapon",
+    pub shootmodel: &'a str,
+    pub nogibshadows: "0",
+    pub spawnflags: u32,
+    pub massoverride: "0",
+    pub skin: "0",
+    pub renderamt: "255",
+    pub gibangles: "0 0 0",
+    pub delay: "3",
+    pub simulation: "0",
+    pub targetname: &'a str,
+    pub m_flgiblife: "1.5",
+    pub m_igibs: "99999",
+    pub gibgravityscale: "1",
+    pub rendercolor: "255 255 255",
+    pub disablereceiveshadows: "0",
+    pub shootsounds: "-1",
+    //pub hammerid: "564233"
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponUsp{
-	//"hammerid": "597821",
+	//pub hammerid: "597821",
     pub origin:Vector,
-    "spawnflags": "1",
-    "targetname": "spusp",
+    pub spawnflags: u32,
+    pub targetname: &'a str,
     pub angles:Vector,
-    "ammo": "99",
+    pub ammo: u32,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PropRagdoll{
-    "fadescale": "1",
-    "modelscale": "1.0",
+    pub fadescale: "1",
+    pub modelscale: f32,
     pub origin:Vector,
-    "model": "models/humans/group03/male_06_bloody.mdl",
-    "fademindist": "-1",
-    "skin": "0",
-    "spawnflags": "4",
+    pub model: &'a str,
+    pub fademindist: "-1",
+    pub skin: "0",
+    pub spawnflags: u32,
     pub angles:Vector,
-    //"hammerid": "739080",
-    "targetname": "ragdoll01"
+    //pub hammerid: "739080",
+    pub targetname: &'a str,
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct PhysBallsocket{
-    "targetname": "ballsocket",
+pub struct PhysBallsocket<'a>{
+    pub targetname: &'a str,
     pub origin:Vector,
-    "attach1": "ragdoll01",
-    //"hammerid": "739103"
+    pub attach1: &'a str,
+    //pub hammerid: "739103"
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct EnvBeam{
+pub struct EnvBeam<'a>{
 	pub origin:Vector,
-    "lightningend": "antlion1",
-    "texturescroll": "35",
-    "hdrcolorscale": "1.0",
-    //"hammerid": "774042",
-    "spawnflags": "48",
-    "life": ".5",
-    "decalname": "bigshot",
-    "renderamt": "200",
-    "boltwidth": "6",
-    "noiseamplitude": "12",
-    "striketime": "1",
-    "texture": "sprites/laserbeam.spr",
-    "lightningstart": "start_tesla1",
-    "radius": "256",
-    "rendercolor": "122 230 252",
-    "targetname": "tesla_beam1"
+    pub lightningend: &'a str,
+    pub texturescroll: "35",
+    pub hdrcolorscale: f32,
+    //pub hammerid: "774042",
+    pub spawnflags: u32,
+    pub life: ".5",
+    pub decalname: &'a str,
+    pub renderamt: "200",
+    pub boltwidth: "6",
+    pub noiseamplitude: "12",
+    pub striketime: "1",
+    pub texture: &'a str,
+    pub lightningstart: "start_tesla1",
+    pub radius: "256",
+    pub rendercolor: "122 230 252",
+    pub targetname: &'a str,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct Light{
 	pub origin:Vector,
-    "_lightscalehdr": "1",
-    "_quadratic_attn": "1",
-    "_lighthdr": "-1 -1 -1 1",
-    "_light": "255 128 64",
-    //"hammerid": "823486"
+    pub _lightscalehdr: "1",
+    pub _quadratic_attn: "1",
+    pub _lighthdr: "-1 -1 -1 1",
+    pub _light: "255 128 64",
+    //pub hammerid: "823486"
 }
