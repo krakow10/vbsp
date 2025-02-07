@@ -1,12 +1,37 @@
 
+use std::str::FromStr;
+
 use serde::{Deserialize, Deserializer};
 
 use crate::{Angles, Color, LightColor, Vector};
+
+use super::FromStrProp;
 
 fn bool_from_int<'de, D: Deserializer<'de>>(deserializer: D) -> Result<bool, D::Error> {
     let int = u8::deserialize(deserializer)?;
     Ok(int > 0)
 }
+
+#[derive(Debug, Clone, Deserialize)]
+pub enum Negated{
+	Yes,
+	No,
+	MatchingCriteria,
+}
+pub struct NegatedParseErr;
+impl FromStr for Negated{
+	type Err=NegatedParseErr;
+
+	fn from_str(s: &str) -> Result<Self, Self::Err> {
+		match s{
+			"1"=>Ok(Negated::Yes),
+			"0"=>Ok(Negated::No),
+			"allow entities that match criteria"=>Ok(Negated::MatchingCriteria),
+			_=>Err(NegatedParseErr),
+		}
+	}
+}
+impl FromStrProp for Negated{}
 
 #[derive(Debug, Clone, Deserialize)]
 #[non_exhaustive]
@@ -23,11 +48,11 @@ pub enum Entity<'a> {
 	#[serde(rename="env_fade")]
 	EnvFade(EnvFade<'a>),
 	#[serde(rename="env_fire")]
-	EnvFire(EnvFire<'a>),
+	EnvFire(EnvFire),
 	#[serde(rename="env_fire_trail")]
 	EnvFireTrail(EnvFireTrail<'a>),
 	#[serde(rename="env_fog_controller")]
-	EnvFogController(EnvFogController<'a>),
+	EnvFogController(EnvFogController),
 	#[serde(rename="env_hudhint")]
 	EnvHudhint(EnvHudhint<'a>),
 	#[serde(rename="env_laser")]
@@ -113,9 +138,9 @@ pub enum Entity<'a> {
 	#[serde(rename="info_player_start")]
 	InfoPlayerStart(InfoPlayerStart<'a>),
 	#[serde(rename = "info_player_counterterrorist")]
-    CounterTerroristSpawn(CounterTerroristSpawn<'a>),
+    CounterTerroristSpawn(CounterTerroristSpawn),
 	#[serde(rename="info_player_terrorist")]
-	InfoPlayerTerrorist(InfoPlayerTerrorist<'a>),
+	InfoPlayerTerrorist(InfoPlayerTerrorist),
 	#[serde(rename="info_target")]
 	InfoTarget(InfoTarget<'a>),
 	#[serde(rename="info_teleport_destination")]
@@ -133,7 +158,7 @@ pub enum Entity<'a> {
 	#[serde(rename="logic_relay")]
 	LogicRelay(LogicRelay<'a>),
 	#[serde(rename="logic_timer")]
-	LogicTimer(LogicTimer),
+	LogicTimer(LogicTimer<'a>),
 	#[serde(rename="math_counter")]
 	MathCounter(MathCounter<'a>),
 	#[serde(rename="move_rope")]
@@ -240,7 +265,7 @@ pub enum Entity<'a> {
 
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct CounterTerroristSpawn <'a>{
+pub struct CounterTerroristSpawn{
 	pub origin: Vector,
     pub angles: Angles,
 }
@@ -256,7 +281,7 @@ pub struct Worldspawn<'a>{
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct InfoPlayerTerrorist<'a>{
+pub struct InfoPlayerTerrorist{
     pub origin:Vector,
     pub angles:Vector,
 }
@@ -700,7 +725,7 @@ pub struct FuncPhysbox<'a>{
     pub rendercolor: Color,
     #[serde(deserialize_with = "bool_from_int")]
     pub explosion: bool,
-    pub material: "7",
+    pub material: u32,
     pub rendermode: u32,
     #[serde(deserialize_with = "bool_from_int")]
     pub forcetoenablemotion: bool,
@@ -722,29 +747,32 @@ pub struct WeaponSmokegrenade<'a>{
 #[derive(Debug, Clone, Deserialize)]
 pub struct FilterDamageType<'a>{
 	pub origin:Vector,
-    pub negated: "1",
+    pub negated: Negated,
     pub targetname: &'a str,
     pub damagetype: u32,
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct EnvFogController<'a>{
-    pub fogend: "4000",
-    pub fogcolor: "0 0 0",
+pub struct EnvFogController{
+    pub fogend: f32,
+    pub fogcolor: Color,
     pub origin:Vector,
-    pub fogcolor2: "255 255 255",
-    pub fogenable: "1",
-    pub farz: "16384",
+    pub fogcolor2: Color,
+    #[serde(deserialize_with = "bool_from_int")]
+    pub fogenable: bool,
+    pub farz: f32,
     pub spawnflags: u32,
-    pub use_angles: "1",
-    pub fogstart: "1000",
-    pub mindxlevel: "0",
-    pub fogdir: "0 0 -1",
-    pub maxdxlevel: "0",
-    pub fogblend: "0",
-    pub foglerptime: "0",
+    #[serde(deserialize_with = "bool_from_int")]
+    pub use_angles: bool,
+    pub fogstart: f32,
+    pub mindxlevel: u8,
+    pub fogdir: Vector,
+    pub maxdxlevel: u8,
+    #[serde(deserialize_with = "bool_from_int")]
+    pub fogblend: bool,
+    pub foglerptime: f32,
     pub angles:Vector,
-    pub fogmaxdensity: "1",
+    pub fogmaxdensity: f32,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -768,9 +796,9 @@ pub struct FuncConveyor<'a>{
 #[derive(Debug, Clone, Deserialize)]
 pub struct FilterActivatorName<'a>{
 	pub origin:Vector,
-    pub negated: "allow entities that match criteria",
+    pub negated: Negated,
     pub targetname: &'a str,
-    pub filtername: "activator"
+    pub filtername: &'a str,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -781,45 +809,46 @@ pub struct TriggerMultiple<'a>{
     pub startdisabled: bool,
     pub wait: f32,
     pub spawnflags: u32,
-    pub ontrigger: "!activator,addoutput,targetname default,0.13,-1",
+    pub ontrigger: &'a str,
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FilterMulti<'a>{
     pub targetname: &'a str,
-    pub filter02: "filt_2",
+    pub filter02: &'a str,
     pub origin:Vector,
-    pub negated: "0",
-    pub filter01: "filt_1",
+    pub negated: Negated,
+    pub filter01: &'a str,
     //pub hammerid: "49342",
-    pub filtertype: "1"
+    #[serde(deserialize_with = "bool_from_int")]
+    pub filtertype: bool,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PropPhysicsOverride<'a>{
 	pub origin:Vector,
     pub spawnflags: u32,
-    pub skin: "0",
+    pub skin: u16,
     #[serde(deserialize_with = "bool_from_int")]
     pub nodamageforces: bool,
     #[serde(deserialize_with = "bool_from_int")]
     pub performancemode: bool,
     pub minhealthdmg: u8,
-    pub fadescale: "1",
+    pub fadescale: f32,
     pub exploderadius: f32,
     pub explodedamage: u8,
     pub damagetype: u32,
     pub angles:Vector,
     //pub hammerid: "89676",
-    pub inertiascale: "1.0",
+    pub inertiascale: f32,
     #[serde(deserialize_with = "bool_from_int")]
     pub forcetoenablemotion: bool,
     pub model: &'a str,
     pub massscale: f32,
-    pub maxdxlevel: "0",
+    pub maxdxlevel: u8,
     pub fademindist: f32,
-    pub fademaxdist: "0",
+    pub fademaxdist: f32,
     #[serde(deserialize_with = "bool_from_int")]
     pub damagetoenablemotion: bool,
     pub parentname: &'a str,
@@ -829,7 +858,7 @@ pub struct PropPhysicsOverride<'a>{
     pub disableshadows: bool,
     #[serde(deserialize_with = "bool_from_int")]
     pub pressuredelay: bool,
-    pub mindxlevel: "0",
+    pub mindxlevel: u8,
     pub physdamagescale: f32,
 }
 
@@ -849,10 +878,11 @@ pub struct PointClientcommand<'a>{
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct GameWeaponManager<'a>{
-    pub weaponname: "weapon_mp5navy",
-    pub maxpieces: "0",
+    pub weaponname: &'a str,
+    pub maxpieces: u8,
     pub origin:Vector,
-    pub ammomod: "1",
+    #[serde(deserialize_with = "bool_from_int")]
+    pub ammomod: bool,
     //pub hammerid: "90603"
 }
 
@@ -860,8 +890,8 @@ pub struct GameWeaponManager<'a>{
 pub struct FilterActivatorClass<'a>{
 	pub origin:Vector,
     pub targetname: &'a str,
-    pub negated: "allow entities that match criteria",
-    pub filterclass: "hegrenade_projectile",
+    pub negated: Negated,
+    pub filterclass: &'a str,
     //pub hammerid: "91384",
 }
 
@@ -874,19 +904,19 @@ pub struct PlayerSpeedmod<'a>{
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct EnvFire<'a>{
+pub struct EnvFire{
     pub spawnflags: u32,
-
-#[serde(deserialize_with = "bool_from_int")]
+    #[serde(deserialize_with = "bool_from_int")]
     pub startdisabled: bool,
-    pub ignitionpoint: "32",
+    pub ignitionpoint: f32,
     pub health: u8,
     pub origin:Vector,
-    pub damagescale: "1.0",
+    pub damagescale: f32,
     //pub hammerid: "101536",
-    pub firesize: "64",
-    pub firetype: "0",
-    pub fireattack: "4"
+    pub firesize: f32,
+    #[serde(deserialize_with = "bool_from_int")]
+    pub firetype: bool,
+    pub fireattack: u8,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -898,7 +928,7 @@ pub struct PlayerWeaponstrip<'a>{
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncBuyzone<'a>{
-    pub teamnum: "2",
+    pub teamnum: u8,
     pub model: &'a str,
     //pub hammerid: "113521"
 }
@@ -910,18 +940,18 @@ pub struct EnvSoundscape<'a>{
     pub startdisabled: bool,
     //pub hammerid: "133638",
     pub origin:Vector,
-    pub radius: "848",
-    pub soundscape: "lego1"
+    pub radius: f32,
+    pub soundscape: &'a str,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvSprite<'a>{
-    pub glowproxysize: "2.0",
+    pub glowproxysize: f32,
     pub rendermode: u32,
-    pub mindxlevel: "0",
-    pub framerate: "10.0",
+    pub mindxlevel: u8,
+    pub framerate: f32,
     //pub hammerid: "134683",
-    pub maxdxlevel: "0",
+    pub maxdxlevel: u8,
     pub hdrcolorscale: f32,
     pub origin:Vector,
     pub renderamt: u8,
@@ -936,15 +966,15 @@ pub struct EnvSprite<'a>{
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct MathCounter<'a>{
-#[serde(deserialize_with = "bool_from_int")]
+	#[serde(deserialize_with = "bool_from_int")]
     pub startdisabled: bool,
     pub targetname: &'a str,
-    pub max: "1",
+    pub max: i32,
     pub origin:Vector,
-    pub onhitmax: "!self,disable,,0,1",
+    pub onhitmax: &'a str,
     //pub hammerid: "134898",
-    pub startvalue: "0",
-    pub min: "0"
+    pub startvalue: i32,
+    pub min: i32,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -958,25 +988,25 @@ pub struct WeaponKnife<'a>{
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvEntityMaker<'a>{
-    pub entitytemplate: "noobtemplate",
+    pub entitytemplate: &'a str,
     pub angles:Vector,
     //pub hammerid: "176738",
     pub spawnflags: u32,
-    pub postspawndirection: "0 0 0",
+    pub postspawndirection: Vector,
     pub origin:Vector,
     pub targetname: &'a str,
-    pub postspawninheritangles: "0",
-    pub postspawndirectionvariance: "0.15",
-    pub postspawnspeed: "0"
+    #[serde(deserialize_with = "bool_from_int")]
+    pub postspawninheritangles: bool,
+    pub postspawndirectionvariance: f32,
+    pub postspawnspeed: f32,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvSoundscapeTriggerable<'a>{
-    pub soundscape: "lego2",
-    pub radius: "128",
+    pub soundscape: &'a str,
+    pub radius: f32,
     //pub hammerid: "179655",
-
-#[serde(deserialize_with = "bool_from_int")]
+	#[serde(deserialize_with = "bool_from_int")]
     pub startdisabled: bool,
     pub targetname: &'a str,
     pub origin:Vector,
@@ -988,43 +1018,47 @@ pub struct EnvHudhint<'a>{
     pub spawnflags: u32,
     //pub hammerid: "183578",
     pub targetname: &'a str,
-    pub message: "press e to restart the map"
+    pub message: &'a str,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PropDynamic<'a>{
-    pub solid: "0",
-    pub mindxlevel: "0",
+	#[serde(deserialize_with = "bool_from_int")]
+    pub solid: bool,
+    pub mindxlevel: u8,
     pub rendercolor: Color,
     #[serde(deserialize_with = "bool_from_int")]
     pub disableshadows: bool,
     //pub hammerid: "190009",
-    pub randomanimation: "0",
+    #[serde(deserialize_with = "bool_from_int")]
+    pub randomanimation: bool,
     pub explodedamage: u8,
     pub angles:Vector,
     #[serde(deserialize_with = "bool_from_int")]
     pub pressuredelay: bool,
-    pub disablebonefollowers: "1",
+    #[serde(deserialize_with = "bool_from_int")]
+    pub disablebonefollowers: bool,
     pub rendermode: u32,
     pub exploderadius: f32,
-    pub fadescale: "1",
+    pub fadescale: f32,
     pub spawnflags: u32,
     #[serde(deserialize_with = "bool_from_int")]
     pub renderfx: bool,
     pub renderamt: u8,
     #[serde(deserialize_with = "bool_from_int")]
     pub performancemode: bool,
-    pub maxanimtime: "10",
-    pub skin: "0",
+    pub maxanimtime: f32,
+    pub skin: u16,
     #[serde(deserialize_with = "bool_from_int")]
     pub disablereceiveshadows: bool,
     pub model: &'a str,
     pub fademindist: f32,
-    pub setbodygroup: "0",
-    pub fademaxdist: "0",
+    #[serde(deserialize_with = "bool_from_int")]
+    pub setbodygroup: bool,
+    pub fademaxdist: f32,
     pub origin:Vector,
-    pub minanimtime: "5",
-    pub maxdxlevel: "0",
+    pub minanimtime: f32,
+    pub maxdxlevel: u8,
 
 #[serde(deserialize_with = "bool_from_int")]
     pub startdisabled: bool,
@@ -1043,7 +1077,7 @@ pub struct TriggerSoundscape<'a>{
 
 #[serde(deserialize_with = "bool_from_int")]
     pub startdisabled: bool,
-    pub soundscape: "nuke.abomb",
+    pub soundscape: &'a str,
     pub model: &'a str,
     pub origin:Vector,
     pub spawnflags: u32,
@@ -1054,39 +1088,38 @@ pub struct TriggerSoundscape<'a>{
 pub struct EnvSpark<'a>{
     pub spawnflags: u32,
     pub targetname: &'a str,
-    pub maxdelay: "0",
-    pub magnitude: "1",
+    pub maxdelay: f32,
+    pub magnitude: f32,
     pub angles:Vector,
     //pub hammerid: "34153",
     pub origin:Vector,
-    pub traillength: "1"
+    pub traillength: f32,
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct LogicTimer{
+pub struct LogicTimer<'a>{
     pub spawnflags: u32,
     #[serde(deserialize_with = "bool_from_int")]
     pub userandomtime: bool,
+    pub lowerrandombound: i32,
     #[serde(deserialize_with = "bool_from_int")]
-    pub lowerrandombound: bool,
-
-#[serde(deserialize_with = "bool_from_int")]2",
     pub startdisabled: bool,
     //pub hammerid: "34188",
-    pub ontimer: "spark1,sparkonce,,0,-1",
-    pub upperrandombound: "20",
+    pub ontimer: &'a str,
+    pub upperrandombound: i32,
     pub origin:Vector,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PropPhysicsMultiplayer<'a>{
-    pub fadescale: "1",
+    pub fadescale: f32,
     #[serde(deserialize_with = "bool_from_int")]
     pub renderfx: bool,
     pub spawnflags: u32,
-    pub fademaxdist: "1200",
-    pub physicsmode: "0",
-    pub inertiascale: "1.0",
+    pub fademaxdist: f32,
+    #[serde(deserialize_with = "bool_from_int")]
+    pub physicsmode: bool,
+    pub inertiascale: f32,
     pub massscale: f32,
     pub shadowcastdist: f32,
     pub explodedamage: u8,
@@ -1098,13 +1131,13 @@ pub struct PropPhysicsMultiplayer<'a>{
     pub angles:Vector,
     #[serde(deserialize_with = "bool_from_int")]
     pub performancemode: bool,
-    pub mindxlevel: "0",
+    pub mindxlevel: u8,
     pub renderamt: u8,
     //pub hammerid: "35774",
-    pub skin: "0",
+    pub skin: u16,
     pub rendermode: u32,
     pub minhealthdmg: u8,
-    pub maxdxlevel: "0",
+    pub maxdxlevel: u8,
     #[serde(deserialize_with = "bool_from_int")]
     pub forcetoenablemotion: bool,
     pub physdamagescale: f32,
@@ -1141,7 +1174,7 @@ pub struct EnvDetailController<'a>{
     //pub hammerid: "207110",
     pub origin:Vector,
     pub fademindist: f32,
-    pub fademaxdist: "350",
+    pub fademaxdist: f32,
     pub angles:Vector,
 }
 
@@ -1160,7 +1193,7 @@ pub struct PropPhysics<'a>{
     pub explodedamage: u8,
     #[serde(deserialize_with = "bool_from_int")]
     pub damagetoenablemotion: bool,
-    pub inertiascale: "1.0",
+    pub inertiascale: f32,
     pub spawnflags: u32,
     #[serde(deserialize_with = "bool_from_int")]
     pub performancemode: bool,
@@ -1175,24 +1208,24 @@ pub struct PropPhysics<'a>{
     pub exploderadius: f32,
     #[serde(deserialize_with = "bool_from_int")]
     pub renderfx: bool,
-    pub mindxlevel: "0",
+    pub mindxlevel: u8,
     pub massscale: f32,
     pub physdamagescale: f32,
     pub shadowcastdist: f32,
     pub origin:Vector,
     //pub hammerid: "487103",
     pub damagetype: u32,
-    pub fadescale: "1",
+    pub fadescale: f32,
     pub rendermode: u32,
     pub renderamt: u8,
-    pub skin: "0",
+    pub skin: u16,
     pub model: &'a str,
     #[serde(deserialize_with = "bool_from_int")]
     pub nodamageforces: bool,
     pub angles:Vector,
-    pub fademaxdist: "2100",
+    pub fademaxdist: f32,
     pub rendercolor: Color,
-    pub maxdxlevel: "0"
+    pub maxdxlevel: u8,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -1247,7 +1280,7 @@ pub struct EnvLightglow<'a>{
     //pub hammerid: "156600",
     pub outermaxdist: "0",
     pub spawnflags: u32,
-    pub glowproxysize: "0",
+    pub glowproxysize: f32,
     pub mindist: "64",
     pub rendercolor: Color,
 }
@@ -1350,19 +1383,19 @@ pub struct PointSpotlight<'a>{
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeaponTmp<'a>{
-    pub maxdxlevel: "0",
+    pub maxdxlevel: u8,
     pub angles:Vector,
-    pub fadescale: "1.0",
+    pub fadescale: f32,
     #[serde(deserialize_with = "bool_from_int")]
     pub renderfx: bool,
     pub shadowcastdist: f32,
     //pub hammerid: "402780",
     pub fademindist: f32,
-    pub mindxlevel: "0",
+    pub mindxlevel: u8,
     pub rendermode: u32,
     pub renderamt: u8,
     pub rendercolor: Color,
-    pub fademaxdist: "0.0",
+    pub fademaxdist: f32,
     pub origin:Vector,
     pub spawnflags: u32,
     #[serde(deserialize_with = "bool_from_int")]
@@ -1377,16 +1410,16 @@ pub struct WeaponXm1014<'a>{
     pub rendercolor: Color,
     //pub hammerid: "402832",
     pub spawnflags: u32,
-    pub mindxlevel: "0",
+    pub mindxlevel: u8,
     pub ammo: u32,
     #[serde(deserialize_with = "bool_from_int")]
     pub nodamageforces: bool,
     pub renderamt: u8,
     pub origin:Vector,
-    pub fademaxdist: "0.0",
+    pub fademaxdist: f32,
     pub rendermode: u32,
-    pub maxdxlevel: "0",
-    pub fadescale: "1.0",
+    pub maxdxlevel: u8,
+    pub fadescale: f32,
     pub shadowcastdist: f32,
     pub fademindist: f32,
     pub angles:Vector,
@@ -1401,7 +1434,7 @@ pub struct WeaponMac10<'a>{
     pub angles:Vector,
     pub shadowcastdist: f32,
     pub rendercolor: Color,
-    pub fademaxdist: "0.0",
+    pub fademaxdist: f32,
     //pub hammerid: "403143",
     pub origin:Vector,
     pub renderamt: u8,
@@ -1409,9 +1442,9 @@ pub struct WeaponMac10<'a>{
     pub renderfx: bool,
     #[serde(deserialize_with = "bool_from_int")]
     pub nodamageforces: bool,
-    pub mindxlevel: "0",
-    pub fadescale: "1.0",
-    pub maxdxlevel: "0"
+    pub mindxlevel: u8,
+    pub fadescale: f32,
+    pub maxdxlevel: u8,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -1421,18 +1454,18 @@ pub struct WeaponUmp45<'a>{
     pub shadowcastdist: f32,
     #[serde(deserialize_with = "bool_from_int")]
     pub renderfx: bool,
-    pub fademaxdist: "0.0",
+    pub fademaxdist: f32,
     //pub hammerid: "403301",
     pub ammo: u32,
-    pub mindxlevel: "0",
+    pub mindxlevel: u8,
     pub renderamt: u8,
     pub origin:Vector,
     #[serde(deserialize_with = "bool_from_int")]
     pub nodamageforces: bool,
     pub fademindist: f32,
     pub angles:Vector,
-    pub maxdxlevel: "0",
-    pub fadescale: "1.0",
+    pub maxdxlevel: u8,
+    pub fadescale: f32,
     pub rendercolor: Color,
 }
 
@@ -1446,12 +1479,12 @@ pub struct WeaponFamas<'a>{
     #[serde(deserialize_with = "bool_from_int")]
     pub nodamageforces: bool,
     pub origin:Vector,
-    pub fademaxdist: "0.0",
-    pub maxdxlevel: "0",
+    pub fademaxdist: f32,
+    pub maxdxlevel: u8,
     pub renderamt: u8,
-    pub mindxlevel: "0",
+    pub mindxlevel: u8,
     pub angles:Vector,
-    pub fadescale: "1.0",
+    pub fadescale: f32,
     pub spawnflags: u32,
     pub rendercolor: Color,
     pub fademindist: f32,
@@ -1466,18 +1499,18 @@ pub struct WeaponG3Sg1<'a>{
     pub rendermode: u32,
     #[serde(deserialize_with = "bool_from_int")]
     pub renderfx: bool,
-    pub fademaxdist: "0.0",
+    pub fademaxdist: f32,
     pub spawnflags: u32,
-    pub fadescale: "1.0",
+    pub fadescale: f32,
     pub ammo: u32,
     //pub hammerid: "403518",
     pub renderamt: u8,
     pub fademindist: f32,
     pub origin:Vector,
-    pub mindxlevel: "0",
+    pub mindxlevel: u8,
     pub rendercolor: Color,
     pub shadowcastdist: f32,
-    pub maxdxlevel: "0",
+    pub maxdxlevel: u8,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -1485,17 +1518,17 @@ pub struct WeaponSg550<'a>{
     pub renderamt: u8,
     //pub hammerid: "403621",
     pub origin:Vector,
-    pub maxdxlevel: "0",
-    pub fadescale: "1.0",
+    pub maxdxlevel: u8,
+    pub fadescale: f32,
     #[serde(deserialize_with = "bool_from_int")]
     pub renderfx: bool,
     pub rendermode: u32,
     pub spawnflags: u32,
     #[serde(deserialize_with = "bool_from_int")]
     pub nodamageforces: bool,
-    pub fademaxdist: "0.0",
+    pub fademaxdist: f32,
     pub rendercolor: Color,
-    pub mindxlevel: "0",
+    pub mindxlevel: u8,
     pub ammo: u32,
     pub angles:Vector,
     pub fademindist: f32,
@@ -1509,8 +1542,8 @@ pub struct WeaponFlashbang<'a>{
     pub spawnflags: u32,
     //pub hammerid: "416160",
     pub renderamt: u8,
-    pub fadescale: "1.0",
-    pub fademaxdist: "0.0",
+    pub fadescale: f32,
+    pub fademaxdist: f32,
     pub angles:Vector,
     pub targetname: &'a str,
     pub rendercolor: Color,
@@ -1566,7 +1599,7 @@ pub struct MoveRope<'a>{
     pub movespeed: "64",
     pub width: "1",
     pub positioninterpolator: "2",
-    pub mindxlevel: "0",
+    pub mindxlevel: u8,
     pub ropematerial: &'a str,
     pub texturescale: "1",
     pub collide: "0",
@@ -1574,7 +1607,7 @@ pub struct MoveRope<'a>{
     pub angles:Vector,
     pub breakable: "0",
     pub type: "0",
-    pub maxdxlevel: "0",
+    pub maxdxlevel: u8,
     pub dangling: "0",
     pub targetname: &'a str,
 }
@@ -1604,7 +1637,7 @@ pub struct FuncAreaportalwindow<'a>{
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvLaser<'a>{
-    pub texturescroll: "35",
+    pub texturescroll: f32,
     pub dissolvetype: "none",
     pub lasertarget: &'a str,
     pub width: "4",
@@ -1699,7 +1732,7 @@ pub struct EnvShake<'a>{
     pub duration: "4",
     pub spawnflags: u32,
     pub frequency: "2.5",
-    pub radius: "375",
+    pub radius: f32,
     //pub hammerid: "105159"
 }
 
@@ -1736,14 +1769,14 @@ pub struct TriggerGravity<'a>{
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct SkyCamera<'a>{
-    pub fogdir: "1 0 0",
+    pub fogdir: Vector,
     pub scale: "16",
-    pub fogstart: "500.0",
-    pub fogend: "2000.0",
-    pub fogcolor2: "255 255 255",
+    pub fogstart: f32,
+    pub fogend: f32,
+    pub fogcolor2: Color,
     //pub hammerid: "361080",
     pub angles:Vector,
-    pub fogcolor: "255 255 255",
+    pub fogcolor: Color,
     pub origin:Vector,
 }
 
@@ -1853,7 +1886,7 @@ pub struct EnvShooter<'a>{
     pub nogibshadows: "0",
     pub spawnflags: u32,
     pub massoverride: "0",
-    pub skin: "0",
+    pub skin: u16,
     pub renderamt: u8,
     pub gibangles: "0 0 0",
     pub delay: "3",
@@ -1881,12 +1914,12 @@ pub struct WeaponUsp<'a>{
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct PropRagdoll<'a>{
-    pub fadescale: "1",
+    pub fadescale: f32,
     pub modelscale: f32,
     pub origin:Vector,
     pub model: &'a str,
     pub fademindist: f32,
-    pub skin: "0",
+    pub skin: u16,
     pub spawnflags: u32,
     pub angles:Vector,
     //pub hammerid: "739080",
@@ -1905,19 +1938,19 @@ pub struct PhysBallsocket<'a>{
 pub struct EnvBeam<'a>{
 	pub origin:Vector,
     pub lightningend: &'a str,
-    pub texturescroll: "35",
+    pub texturescroll: f32,
     pub hdrcolorscale: f32,
     //pub hammerid: "774042",
     pub spawnflags: u32,
     pub life: f32,
     pub decalname: &'a str,
     pub renderamt: u8,
-    pub boltwidth: "6",
-    pub noiseamplitude: "12",
-    pub striketime: "1",
+    pub boltwidth: f32,
+    pub noiseamplitude: f32,
+    pub striketime: f32,
     pub texture: &'a str,
     pub lightningstart: "start_tesla1",
-    pub radius: "256",
+    pub radius: f32,
     pub rendercolor: Color,
     pub targetname: &'a str,
 }
