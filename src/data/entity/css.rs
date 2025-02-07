@@ -1646,17 +1646,17 @@ pub struct EnvFireTrail<'a> {
 pub struct InfoLadder {
     //"hammerid": "2854",
     #[serde(rename = "maxs.y")]
-    maxs_y: f32,
+    pub maxs_y: f32,
     #[serde(rename = "mins.z")]
-    mins_z: f32,
+    pub mins_z: f32,
     #[serde(rename = "maxs.x")]
-    maxs_x: f32,
+    pub maxs_x: f32,
     #[serde(rename = "mins.y")]
-    mins_y: f32,
+    pub mins_y: f32,
     #[serde(rename = "maxs.z")]
-    maxs_z: f32,
+    pub maxs_z: f32,
     #[serde(rename = "mins.x")]
-    mins_x: f32,
+    pub mins_x: f32,
 }
 
 #[derive(Debug, Clone, Deserialize)]
