@@ -8,7 +8,7 @@ use std::str::FromStr;
 use vdf_reader::VdfError;
 
 #[cfg(feature="css")]
-mod css;
+pub mod css;
 
 #[derive(Clone)]
 pub struct Entities {
