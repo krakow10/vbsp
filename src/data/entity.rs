@@ -262,6 +262,7 @@ mod typed {
     #[non_exhaustive]
     #[serde(untagged)]
     pub enum EntityVersion<'a> {
+        #[serde(borrow)]
         Base(Entity<'a>),
         #[cfg(feature = "css")]
         #[serde(borrow)]
