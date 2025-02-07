@@ -374,7 +374,8 @@ mod typed {
         #[serde(borrow)]
         Occluder(Occluder<'a>),
         #[cfg(feature="css")]
-        CSS(super::css::Entity),
+        #[serde(borrow)]
+        CSS(super::css::Entity<'a>),
         #[serde(skip)]
         Unknown(RawEntity<'a>),
     }
