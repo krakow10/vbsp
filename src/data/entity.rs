@@ -7,7 +7,7 @@ use std::fmt::Debug;
 use std::str::FromStr;
 use vdf_reader::VdfError;
 
-#[cfg(feature="css")]
+#[cfg(feature = "css")]
 pub mod css;
 
 #[derive(Clone)]
@@ -261,13 +261,13 @@ mod typed {
     #[derive(Debug, Clone, Deserialize)]
     #[non_exhaustive]
     #[serde(untagged)]
-    pub enum EntityVersion<'a>{
-		Base(Entity<'a>),
-		#[cfg(feature="css")]
-		#[serde(borrow)]
-		CSS(super::css::Entity<'a>),
-		#[serde(skip)]
-		Unknown(RawEntity<'a>),
+    pub enum EntityVersion<'a> {
+        Base(Entity<'a>),
+        #[cfg(feature = "css")]
+        #[serde(borrow)]
+        CSS(super::css::Entity<'a>),
+        #[serde(skip)]
+        Unknown(RawEntity<'a>),
     }
 
     #[derive(Debug, Clone, Deserialize)]
