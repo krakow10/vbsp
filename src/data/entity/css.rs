@@ -233,13 +233,15 @@ pub enum Entity {
 	Worldspawn(Worldspawn),
 }
 
+
 #[derive(Debug, Clone, Deserialize)]
 pub struct CounterTerroristSpawn {
-    pub origin: Vector,
+	pub origin: Vector,
     pub angles: Angles,
 }
-pub struct Worldspawn
-{
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct Worldspawn{
     "maxpropscreenwidth": "-1",
     "skyname": "italy",
     "detailmaterial": "detail/detailsprites",
@@ -247,31 +249,35 @@ pub struct Worldspawn
     "world_mins": "-2737 -1681 -244",
     "world_maxs": "432 944 360",
     "detailvbsp": "detail.vbsp"
-},
-pub struct InfoPlayerTerrorist
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct InfoPlayerTerrorist{
     "classname": "info_player_terrorist",
     "origin": "53.6539 -141 80",
     "angles": "0 0 0"
-},
-pub struct TriggerTeleport
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct TriggerTeleport{
     "target": "level1",
     "startdisabled": "0",
     "classname": "trigger_teleport",
     "origin": "200 240 29.5",
     "spawnflags": "1",
     "model": "*2"
-},
-pub struct InfoTeleportDestination
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct InfoTeleportDestination{
     "origin": "200 -64 72.8837",
     "targetname": "level1",
     "angles": "0 90 0",
     "classname": "info_teleport_destination"
-},
-pub struct FuncWaterAnalog
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncWaterAnalog{
     "rendercolor": "255 255 255",
     "renderfx": "0",
     "classname": "func_water_analog",
@@ -286,9 +292,10 @@ pub struct FuncWaterAnalog
     "renderamt": "255",
     "origin": "200 240 29.5",
     "rendermode": "0"
-},
-pub struct LightEnvironment
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct LightEnvironment{
     "origin": "-529 -168 511",
     "_light": "255 255 198 300",
     "classname": "light_environment",
@@ -297,15 +304,17 @@ pub struct LightEnvironment
     "_lighthdr": "-1 -1 -1 1",
     "pitch": "-90",
     "_ambienthdr": "-1 -1 -1 1"
-},
-pub struct GamePlayerEquip
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct GamePlayerEquip{
     "origin": "200 -680 224",
     "weapon_knife": "1",
     "classname": "game_player_equip"
-},
-pub struct TriggerHurt
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct TriggerHurt{
     "damagecap": "1000",
     "model": "*76",
     "spawnflags": "1",
@@ -315,9 +324,10 @@ pub struct TriggerHurt
     "damage": "1000",
     "startdisabled": "0",
     "damagemodel": "0"
-},
-pub struct FuncButton
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncButton{
     "classname": "func_button",
     "movedir": "0 0 0",
     "onpressed": "kill04,disable,,0.5,-1",
@@ -338,22 +348,25 @@ pub struct FuncButton
     "locked_sound": "0",
     "renderfx": "0",
     "health": "0"
-},
-pub struct WeaponM4A1
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponM4A1{
     "spawnflags": "1",
     "classname": "weapon_m4a1",
     "angles": "0 0 0",
     "origin": "85 -757.356 221"
-},
-pub struct WaterLodControl
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WaterLodControl{
     "cheapwaterenddistance": "2000",
     "cheapwaterstartdistance": "1000",
     "classname": "water_lod_control"
-},
-pub struct FuncWall
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncWall{
     "renderamt": "100",
     "rendercolor": "255 255 255",
     "rendermode": "2",
@@ -362,14 +375,16 @@ pub struct FuncWall
     "disablereceiveshadows": "0",
     "model": "*1",
     "renderfx": "0"
-},
-pub struct EnvTonemapController
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvTonemapController{
     "origin": "-344 -464 80",
     "classname": "env_tonemap_controller"
-},
-pub struct EnvSun
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvSun{
     "rendercolor": "237 232 216",
     "target": "sun",
     "hdrcolorscale": "1.0",
@@ -381,25 +396,28 @@ pub struct EnvSun
     "overlaycolor": "0 0 0",
     "classname": "env_sun",
     "overlaysize": "-1"
-},
-pub struct InfoTarget
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct InfoTarget{
     "spawnflags": "0",
     "origin": "-376 -128 80",
     "targetname": "sun",
     "angles": "0 0 0",
     "classname": "info_target"
-},
-pub struct WeaponAwp
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponAwp{
     "origin": "-2128.89 -776 76.1248",
     "classname": "weapon_awp",
     "angles": "0 0 0",
     "targetname": "secretw1",
     "spawnflags": "1"
-},
-pub struct EnvSpritetrail
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvSpritetrail{
     "endwidth": "1.0",
     "lifetime": "1",
     "classname": "env_spritetrail",
@@ -410,25 +428,28 @@ pub struct EnvSpritetrail
     "startwidth": "8.0",
     "spritename": "sprites/bluelaser1.vmt",
     "rendermode": "5"
-},
-pub struct WeaponDeagle
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponDeagle{
     "classname": "weapon_deagle",
     "origin": "-760.106 -167.704 107",
     "angles": "0 0 0",
     "ammo": "31"
-},
-pub struct ShadowControl
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct ShadowControl{
     "origin": "-16 168 64",
     "angles": "80 30 0",
     "classname": "shadow_control",
     "distance": "75",
     "color": "128 128 128",
     "hammerid": "2971"
-},
-pub struct WeaponElite
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponElite{
     "classname": "weapon_elite",
     "hammerid": "7248",
     "targetname": "gunmapby",
@@ -436,9 +457,10 @@ pub struct WeaponElite
     "spawnflags": "1",
     "angles": "0 0 0",
     "origin": "-448 -2 80"
-},
-pub struct FuncRotating
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncRotating{
     "spawnflags": "67",
     "volume": "0",
     "model": "*43",
@@ -457,9 +479,10 @@ pub struct FuncRotating
     "maxspeed": "50",
     "angles": "0 0 0",
     "rendermode": "0"
-},
-pub struct FuncBreakable
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncBreakable{
     "gibdir": "0 0 0",
     "rendercolor": "255 255 255",
     "performancemode": "0",
@@ -485,9 +508,10 @@ pub struct FuncBreakable
     "spawnflags": "0",
     "disableshadows": "1",
     "minhealthdmg": "0"
-},
-pub struct WeaponP90
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponP90{
     "ammo": "31",
     "origin": "-960 2240 1696",
     "spawnflags": "1",
@@ -495,9 +519,10 @@ pub struct WeaponP90
     "targetname": "p90",
     "hammerid": "15611",
     "angles": "0 0 0"
-},
-pub struct WeaponGlock
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponGlock{
     "classname": "weapon_glock",
     "targetname": "glock",
     "hammerid": "19772",
@@ -505,17 +530,19 @@ pub struct WeaponGlock
     "angles": "0 0 0",
     "spawnflags": "1",
     "ammo": "31"
-},
-pub struct LogicAuto
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct LogicAuto{
     "hammerid": "20253",
     "classname": "logic_auto",
     "origin": "5856 160 64",
     "spawnflags": "0",
     "onmapspawn": "d_red_3,open,,0,-1"
-},
-pub struct FuncWallToggle
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncWallToggle{
     "rendercolor": "255 255 255",
     "renderamt": "255",
     "hammerid": "20341",
@@ -527,9 +554,10 @@ pub struct FuncWallToggle
     "renderfx": "0",
     "classname": "func_wall_toggle",
     "targetname": "wall_to_glock"
-},
-pub struct WeaponM249
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponM249{
     "angles": "0 0 0",
     "targetname": "m249",
     "origin": "6488 1992 -344",
@@ -537,18 +565,20 @@ pub struct WeaponM249
     "spawnflags": "1",
     "ammo": "31",
     "classname": "weapon_m249"
-},
-pub struct WeaponHegrenade
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponHegrenade{
     "origin": "4768 1664 148",
     "hammerid": "28302",
     "targetname": "nade",
     "angles": "0 0 0",
     "classname": "weapon_hegrenade",
     "spawnflags": "1"
-},
-pub struct PointViewcontrol
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct PointViewcontrol{
     "wait": "10",
     "classname": "point_viewcontrol",
     "angles": "0 0 0",
@@ -558,25 +588,28 @@ pub struct PointViewcontrol
     "deceleration": "500",
     "origin": "6456 1992 -240",
     "hammerid": "36815"
-},
-pub struct WeaponScout
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponScout{
     "spawnflags": "0",
     "targetname": "scout1",
     "origin": "808 160 96",
     "classname": "weapon_scout",
     "angles": "0 270 0"
-},
-pub struct PointTemplate
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct PointTemplate{
     "template01": "scout1",
     "spawnflags": "2",
     "classname": "point_template",
     "targetname": "template1",
     "origin": "800 160 128"
-},
-pub struct FuncDoorRotating
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncDoorRotating{
     "unlocked_sentence": "0",
     "renderamt": "255",
     "rendermode": "0",
@@ -602,9 +635,10 @@ pub struct FuncDoorRotating
     "wait": "3",
     "distance": "135",
     "disableshadows": "0"
-},
-pub struct TriggerPush
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct TriggerPush{
     "alternateticksfix": "0",
     "speed": "1000",
     "model": "*456",
@@ -613,9 +647,10 @@ pub struct TriggerPush
     "pushdir": "0 90 0",
     "startdisabled": "0",
     "classname": "trigger_push"
-},
-pub struct FuncPhysbox
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncPhysbox{
     "preferredcarryangles": "0 0 0",
     "spawnobject": "0",
     "disableshadows": "0",
@@ -645,25 +680,28 @@ pub struct FuncPhysbox
     "health": "0",
     "model": "*655",
     "pressuredelay": "0"
-},
-pub struct WeaponSmokegrenade
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponSmokegrenade{
     "classname": "weapon_smokegrenade",
     "origin": "7760 4256 144",
     "angles": "0 0 0",
     "spawnflags": "1",
     "targetname": "smoke1"
-},
-pub struct FilterDamageType
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FilterDamageType{
     "origin": "-719.625 -413.753 1793",
     "classname": "filter_damage_type",
     "negated": "1",
     "targetname": "falldmg",
     "damagetype": "32"
-},
-pub struct EnvFogController
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvFogController{
     "fogend": "4000",
     "fogcolor": "0 0 0",
     "origin": "1820.26 -346.925 1025",
@@ -681,9 +719,10 @@ pub struct EnvFogController
     "angles": "0 0 0",
     "fogmaxdensity": "1",
     "classname": "env_fog_controller"
-},
-pub struct FuncConveyor
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncConveyor{
     "spawnflags": "0",
     "classname": "func_conveyor",
     "disablereceiveshadows": "0",
@@ -696,17 +735,19 @@ pub struct FuncConveyor
     "renderamt": "255",
     "model": "*60",
     "movedir": "0 45 0"
-},
-pub struct FilterActivatorName
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FilterActivatorName{
     "origin": "-98.1297 -512 1751.28",
     "negated": "allow entities that match criteria",
     "classname": "filter_activator_name",
     "targetname": "filter_activator",
     "filtername": "activator"
-},
-pub struct TriggerMultiple
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct TriggerMultiple{
     "model": "*86",
     "startdisabled": "0",
     "wait": "0.01",
@@ -714,9 +755,10 @@ pub struct TriggerMultiple
     "ontrigger": "!activator,addoutput,targetname default,0.13,-1",
     "origin": "512 512 -528",
     "classname": "trigger_multiple"
-},
-pub struct FilterMulti
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FilterMulti{
     "targetname": "1multi",
     "filter02": "filt_2",
     "origin": "82 158 142",
@@ -725,9 +767,10 @@ pub struct FilterMulti
     "filter01": "filt_1",
     "hammerid": "49342",
     "filtertype": "1"
-},
-pub struct PropPhysicsOverride
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct PropPhysicsOverride{
     "origin": "156 280 160.679",
     "spawnflags": "524",
     "skin": "0",
@@ -756,49 +799,55 @@ pub struct PropPhysicsOverride
     "pressuredelay": "0",
     "mindxlevel": "0",
     "physdamagescale": "0.1"
-},
-pub struct PointServercommand
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct PointServercommand{
     "classname": "point_servercommand",
     "origin": "60 210 142",
     "targetname": "servcommand",
     "hammerid": "90371"
-},
-pub struct PointClientcommand
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct PointClientcommand{
     "targetname": "clientcommand",
     "classname": "point_clientcommand",
     "hammerid": "90377",
     "origin": "38 210 142"
-},
-pub struct GameWeaponManager
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct GameWeaponManager{
     "weaponname": "weapon_mp5navy",
     "maxpieces": "0",
     "origin": "48 544 136",
     "ammomod": "1",
     "classname": "game_weapon_manager",
     "hammerid": "90603"
-},
-pub struct FilterActivatorClass
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FilterActivatorClass{
     "origin": "-56 210 142",
     "targetname": "hegrenade",
     "negated": "allow entities that match criteria",
     "filterclass": "hegrenade_projectile",
     "hammerid": "91384",
     "classname": "filter_activator_class"
-},
-pub struct PlayerSpeedmod
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct PlayerSpeedmod{
     "hammerid": "91426",
     "origin": "82 236 142",
     "spawnflags": "0",
     "classname": "player_speedmod",
     "targetname": "speed"
-},
-pub struct EnvFire
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvFire{
     "spawnflags": "31",
     "classname": "env_fire",
     "startdisabled": "0",
@@ -810,32 +859,36 @@ pub struct EnvFire
     "firesize": "64",
     "firetype": "0",
     "fireattack": "4"
-},
-pub struct PlayerWeaponstrip
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct PlayerWeaponstrip{
     "targetname": "strip",
     "hammerid": "107702",
     "origin": "16 236 142",
     "classname": "player_weaponstrip"
-},
-pub struct FuncBuyzone
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncBuyzone{
     "classname": "func_buyzone",
     "teamnum": "2",
     "model": "*542",
     "hammerid": "113521"
-},
-pub struct EnvSoundscape
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvSoundscape{
     "startdisabled": "0",
     "hammerid": "133638",
     "origin": "-256 2048 224",
     "radius": "848",
     "classname": "env_soundscape",
     "soundscape": "lego1"
-},
-pub struct EnvSprite
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvSprite{
     "glowproxysize": "2.0",
     "rendermode": "0",
     "mindxlevel": "0",
@@ -851,9 +904,10 @@ pub struct EnvSprite
     "renderfx": "0",
     "rendercolor": "255 255 255",
     "classname": "env_sprite"
-},
-pub struct MathCounter
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct MathCounter{
     "startdisabled": "0",
     "targetname": "counter",
     "max": "1",
@@ -863,18 +917,20 @@ pub struct MathCounter
     "classname": "math_counter",
     "startvalue": "0",
     "min": "0"
-},
-pub struct WeaponKnife
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponKnife{
     "classname": "weapon_knife",
     "angles": "0 0 0",
     "hammerid": "176620",
     "spawnflags": "1",
     "targetname": "noobknife",
     "origin": "-80 592 192"
-},
-pub struct EnvEntityMaker
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvEntityMaker{
     "entitytemplate": "noobtemplate",
     "angles": "0 0 0",
     "hammerid": "176738",
@@ -886,9 +942,10 @@ pub struct EnvEntityMaker
     "postspawninheritangles": "0",
     "postspawndirectionvariance": "0.15",
     "postspawnspeed": "0"
-},
-pub struct EnvSoundscapeTriggerable
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvSoundscapeTriggerable{
     "soundscape": "lego2",
     "radius": "128",
     "hammerid": "179655",
@@ -896,18 +953,20 @@ pub struct EnvSoundscapeTriggerable
     "targetname": "first",
     "classname": "env_soundscape_triggerable",
     "origin": "-48 -200 208"
-},
-pub struct EnvHudhint
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvHudhint{
     "origin": "82 280 142",
     "classname": "env_hudhint",
     "spawnflags": "0",
     "hammerid": "183578",
     "targetname": "quickrestart",
     "message": "press e to restart the map"
-},
-pub struct PropDynamic
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct PropDynamic{
     "solid": "0",
     "mindxlevel": "0",
     "classname": "prop_dynamic",
@@ -937,17 +996,19 @@ pub struct PropDynamic
     "minanimtime": "5",
     "maxdxlevel": "0",
     "startdisabled": "0"
-},
-pub struct Infodecal
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct Infodecal{
     "texture": "decals/decalgraffiti044a",
     "hammerid": "3739",
     "classname": "infodecal",
     "angles": "0 0 0",
     "origin": "-15520 -12604.2 411.861"
-},
-pub struct TriggerSoundscape
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct TriggerSoundscape{
     "startdisabled": "0",
     "soundscape": "nuke.abomb",
     "model": "*407",
@@ -955,9 +1016,10 @@ pub struct TriggerSoundscape
     "spawnflags": "1",
     "classname": "trigger_soundscape",
     "hammerid": "7740"
-},
-pub struct EnvSpark
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvSpark{
     "spawnflags": "0",
     "classname": "env_spark",
     "targetname": "spark1",
@@ -967,9 +1029,10 @@ pub struct EnvSpark
     "hammerid": "34153",
     "origin": "-15534 -12064 153",
     "traillength": "1"
-},
-pub struct LogicTimer
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct LogicTimer{
     "spawnflags": "0",
     "userandomtime": "1",
     "lowerrandombound": "12",
@@ -979,9 +1042,10 @@ pub struct LogicTimer
     "ontimer": "spark1,sparkonce,,0,-1",
     "upperrandombound": "20",
     "origin": "-15509 -12044 144.947"
-},
-pub struct PropPhysicsMultiplayer
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct PropPhysicsMultiplayer{
     "fadescale": "1",
     "renderfx": "0",
     "spawnflags": "256",
@@ -1014,9 +1078,10 @@ pub struct PropPhysicsMultiplayer
     "fademindist": "1000",
     "damagetoenablemotion": "0",
     "classname": "prop_physics_multiplayer"
-},
-pub struct EnvWind
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvWind{
     "origin": "-14656 -11816 368",
     "maxgustdelay": "20",
     "mingustdelay": "10",
@@ -1029,26 +1094,29 @@ pub struct EnvWind
     "maxwind": "50",
     "gustdirchange": "20",
     "classname": "env_wind"
-},
-pub struct EnvDetailController
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvDetailController{
     "classname": "env_detail_controller",
     "hammerid": "207110",
     "origin": "-14656 -11768 352",
     "fademindist": "200",
     "fademaxdist": "350",
     "angles": "0 0 0"
-},
-pub struct InfoPlayerStart
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct InfoPlayerStart{
     "angles": "0 0 0",
     "origin": "-15648 -11672 40",
     "classname": "info_player_start",
     "hammerid": "259724",
     "spawnflags": "0"
-},
-pub struct PropPhysics
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct PropPhysics{
     "pressuredelay": "0",
     "explodedamage": "0",
     "damagetoenablemotion": "0",
@@ -1080,9 +1148,10 @@ pub struct PropPhysics
     "fademaxdist": "2100",
     "rendercolor": "255 255 255",
     "maxdxlevel": "0"
-},
-pub struct WeaponAk47
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponAk47{
     "classname": "weapon_ak47",
     "angles": "0 180 0",
     "targetname": "ak1_2",
@@ -1090,9 +1159,10 @@ pub struct WeaponAk47
     "origin": "-12927.6 9798.86 46.2675",
     "spawnflags": "1",
     "hammerid": "155595"
-},
-pub struct FuncMovelinear
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncMovelinear{
     "disablereceiveshadows": "0",
     "renderfx": "0",
     "origin": "-12649.3 9902 90.26",
@@ -1109,18 +1179,20 @@ pub struct FuncMovelinear
     "spawnflags": "8",
     "startposition": "0",
     "movedistance": "100"
-},
-pub struct FuncPrecipitation
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncPrecipitation{
     "hammerid": "288365",
     "renderamt": "100",
     "preciptype": "3",
     "classname": "func_precipitation",
     "rendercolor": "100 100 100",
     "model": "*1"
-},
-pub struct EnvLightglow
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvLightglow{
     "hdrcolorscale": "0.5",
     "origin": "-1120 -1120 2432",
     "classname": "env_lightglow",
@@ -1134,9 +1206,10 @@ pub struct EnvLightglow
     "glowproxysize": "0",
     "mindist": "64",
     "rendercolor": "255 255 255"
-},
-pub struct EnvSmokestack
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvSmokestack{
     "rendercolor": "255 255 255",
     "roll": "15.0",
     "windangle": "0",
@@ -1156,9 +1229,10 @@ pub struct EnvSmokestack
     "spreadspeed": "15",
     "hammerid": "129270",
     "speed": "30"
-},
-pub struct FuncSmokevolume
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncSmokevolume{
     "color2": "192 192 192",
     "particledrawwidth": "192",
     "classname": "func_smokevolume",
@@ -1172,9 +1246,10 @@ pub struct FuncSmokevolume
     "densityrampspeed": "1",
     "density": "0.5",
     "model": "*73"
-},
-pub struct EnvEmbers
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvEmbers{
     "angles": "0 90 0",
     "classname": "env_embers",
     "spawnflags": "1",
@@ -1184,9 +1259,10 @@ pub struct EnvEmbers
     "lifetime": "8",
     "rendercolor": "255 128 0",
     "density": "32"
-},
-pub struct FuncDustcloud
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncDustcloud{
     "frozen": "0",
     "sizemax": "150",
     "startdisabled": "0",
@@ -1201,9 +1277,10 @@ pub struct FuncDustcloud
     "speedmax": "6",
     "sizemin": "50",
     "spawnrate": "500"
-},
-pub struct TriggerOnce
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct TriggerOnce{
     "origin": "-2048 -6656 -6648",
     "model": "*398",
     "hammerid": "387965",
@@ -1212,9 +1289,10 @@ pub struct TriggerOnce
     "startdisabled": "0",
     "ontrigger": "servercommand,command,say level 5 unlocked,0,-1",
     "spawnflags": "1"
-},
-pub struct PointSpotlight
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct PointSpotlight{
     "hdrcolorscale": "0.5",
     "angles": "-90 0 0",
     "spotlightlength": "200.0",
@@ -1226,9 +1304,10 @@ pub struct PointSpotlight
     "origin": "8192 -12288 13568",
     "rendercolor": "255 255 255",
     "hammerid": "393222"
-},
-pub struct WeaponTmp
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponTmp{
     "maxdxlevel": "0",
     "angles": "0 270 0",
     "fadescale": "1.0",
@@ -1246,9 +1325,10 @@ pub struct WeaponTmp
     "spawnflags": "1",
     "nodamageforces": "0",
     "ammo": "120"
-},
-pub struct WeaponXm1014
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponXm1014{
     "renderfx": "0",
     "rendercolor": "255 255 255",
     "hammerid": "402832",
@@ -1266,9 +1346,10 @@ pub struct WeaponXm1014
     "shadowcastdist": "0",
     "fademindist": "-1.0",
     "angles": "0 270 0"
-},
-pub struct WeaponMac10
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponMac10{
     "spawnflags": "1",
     "rendermode": "0",
     "fademindist": "-1.0",
@@ -1286,9 +1367,10 @@ pub struct WeaponMac10
     "mindxlevel": "0",
     "fadescale": "1.0",
     "maxdxlevel": "0"
-},
-pub struct WeaponUmp45
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponUmp45{
     "rendermode": "0",
     "spawnflags": "1",
     "shadowcastdist": "0",
@@ -1306,9 +1388,10 @@ pub struct WeaponUmp45
     "maxdxlevel": "0",
     "fadescale": "1.0",
     "rendercolor": "255 255 255"
-},
-pub struct WeaponFamas
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponFamas{
     "hammerid": "403360",
     "shadowcastdist": "0",
     "classname": "weapon_famas",
@@ -1326,9 +1409,10 @@ pub struct WeaponFamas
     "rendercolor": "255 255 255",
     "fademindist": "-1.0",
     "ammo": "90"
-},
-pub struct WeaponG3Sg1
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponG3Sg1{
     "angles": "0 180 0",
     "nodamageforces": "0",
     "rendermode": "0",
@@ -1346,9 +1430,10 @@ pub struct WeaponG3Sg1
     "shadowcastdist": "0",
     "maxdxlevel": "0",
     "classname": "weapon_g3sg1"
-},
-pub struct WeaponSg550
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponSg550{
     "renderamt": "255",
     "hammerid": "403621",
     "origin": "-14040 -9200 -7096",
@@ -1366,9 +1451,10 @@ pub struct WeaponSg550
     "angles": "0 270 0",
     "fademindist": "-1.0",
     "shadowcastdist": "0"
-},
-pub struct WeaponFlashbang
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponFlashbang{
     "origin": "11136 -11648 13440",
     "fademindist": "-1.0",
     "spawnflags": "0",
@@ -1380,17 +1466,19 @@ pub struct WeaponFlashbang
     "angles": "0 270 0",
     "targetname": "flashbang",
     "rendercolor": "255 255 255"
-},
-pub struct EnvFireTrail
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvFireTrail{
     "targetname": "uber_scout_fire",
     "hammerid": "425179",
     "classname": "env_fire_trail",
     "origin": "-2816 -7680 15616",
     "parentname": "uber_scout"
-},
-pub struct InfoLadder
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct InfoLadder{
     "maxs.y": "3528.00",
     "mins.z": "112.00",
     "hammerid": "2854",
@@ -1399,9 +1487,10 @@ pub struct InfoLadder
     "mins.y": "3520.00",
     "maxs.z": "640.00",
     "mins.x": "-9856.00"
-},
-pub struct WeaponM3
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponM3{
     "ammo": "999",
     "hammerid": "176561",
     "classname": "weapon_m3",
@@ -1409,9 +1498,10 @@ pub struct WeaponM3
     "spawnflags": "1",
     "targetname": "gun",
     "origin": "-5408 8800 1390.15"
-},
-pub struct WeaponFiveseven
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponFiveseven{
     "origin": "-11616 -96 -13841.8",
     "ammo": "999",
     "classname": "weapon_fiveseven",
@@ -1419,9 +1509,10 @@ pub struct WeaponFiveseven
     "targetname": "gun6",
     "spawnflags": "1",
     "angles": "0 0 0"
-},
-pub struct MoveRope
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct MoveRope{
     "spawnflags": "0",
     "barbed": "0",
     "slack": "105",
@@ -1443,9 +1534,10 @@ pub struct MoveRope
     "dangling": "0",
     "targetname": "rope_20",
     "classname": "move_rope"
-},
-pub struct EnvFade
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvFade{
     "spawnflags": "4",
     "classname": "env_fade",
     "rendercolor": "0 0 0",
@@ -1455,9 +1547,10 @@ pub struct EnvFade
     "holdtime": "0.0",
     "renderamt": "255",
     "targetname": "fadelj1"
-},
-pub struct FuncAreaportalwindow
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncAreaportalwindow{
     "translucencylimit": "0.0",
     "fadestartdist": "1950",
     "classname": "func_areaportalwindow",
@@ -1466,9 +1559,10 @@ pub struct FuncAreaportalwindow
     "target": "brush_a",
     "portalversion": "1",
     "hammerid": "270454"
-},
-pub struct EnvLaser
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvLaser{
     "texturescroll": "35",
     "dissolvetype": "none",
     "lasertarget": "las_target2",
@@ -1481,18 +1575,20 @@ pub struct EnvLaser
     "hammerid": "731916",
     "origin": "8656 -8360 4468",
     "spawnflags": "1"
-},
-pub struct LogicRelay
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct LogicRelay{
     "origin": "-1680 -1586.07 -52",
     "hammerid": "805602",
     "ontrigger": "snek_btn_1,kill,,0,-1",
     "targetname": "snake_relay1",
     "classname": "logic_relay",
     "spawnflags": "1"
-},
-pub struct PathTrack
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct PathTrack{
     "orientationtype": "1",
     "angles": "0 0 0",
     "spawnflags": "0",
@@ -1501,9 +1597,10 @@ pub struct PathTrack
     "targetname": "vr_track1_1",
     "classname": "path_track",
     "origin": "-11920 -8164 132"
-},
-pub struct FuncTracktrain
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncTracktrain{
     "velocitytype": "1",
     "rendermode": "0",
     "orientationtype": "1",
@@ -1531,9 +1628,10 @@ pub struct FuncTracktrain
     "origin": "-11920 -8164 144",
     "renderfx": "0",
     "startspeed": "100"
-},
-pub struct EnvSteam
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvSteam{
     "rate": "26",
     "spawnflags": "0",
     "speed": "120",
@@ -1549,9 +1647,10 @@ pub struct EnvSteam
     "spreadspeed": "15",
     "classname": "env_steam",
     "jetlength": "80"
-},
-pub struct EnvShake
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvShake{
     "amplitude": "6",
     "classname": "env_shake",
     "targetname": "cave_shake01",
@@ -1561,9 +1660,10 @@ pub struct EnvShake
     "frequency": "2.5",
     "radius": "375",
     "hammerid": "105159"
-},
-pub struct FuncRotButton
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncRotButton{
     "distance": "90",
     "sounds": "25",
     "angles": "0 0 0",
@@ -1578,9 +1678,10 @@ pub struct FuncRotButton
     "spawnflags": "1088",
     "model": "*496",
     "classname": "func_rot_button"
-},
-pub struct TriggerGravity
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct TriggerGravity{
     "hammerid": "259593",
     "origin": "8632 4504 -280",
     "spawnflags": "1",
@@ -1588,9 +1689,10 @@ pub struct TriggerGravity
     "startdisabled": "0",
     "gravity": ".05",
     "classname": "trigger_gravity"
-},
-pub struct SkyCamera
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct SkyCamera{
     "fogdir": "1 0 0",
     "scale": "16",
     "fogstart": "500.0",
@@ -1601,9 +1703,10 @@ pub struct SkyCamera
     "angles": "0 0 0",
     "fogcolor": "255 255 255",
     "origin": "-8969 6066 388"
-},
-pub struct GameUi
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct GameUi{
     "fieldofview": "-1.0",
     "origin": "272 5584 934.249",
     "pressedforward": "push_forward,enable,,0,-1",
@@ -1619,9 +1722,10 @@ pub struct GameUi
     "pressedmoveleft": "push_left,enable,,0,-1",
     "classname": "game_ui",
     "targetname": "ui"
-},
-pub struct FuncPhysboxMultiplayer
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct FuncPhysboxMultiplayer{
     "targetname": "box_lvl1",
     "health": "0",
     "disablereceiveshadows": "1",
@@ -1653,9 +1757,10 @@ pub struct FuncPhysboxMultiplayer
     "nodamageforces": "0",
     "explodedamage": "0",
     "massscale": "0.01"
-},
-pub struct TriggerLook
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct TriggerLook{
     "startdisabled": "0",
     "looktime": "5",
     "hammerid": "491215",
@@ -1667,9 +1772,10 @@ pub struct TriggerLook
     "classname": "trigger_look",
     "ontrigger": "door_pic,open,,0,-1",
     "origin": "9824 -16 8168"
-},
-pub struct KeyframeRope
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct KeyframeRope{
     "origin": "5780 -2060 5304",
     "slack": "25",
     "texturescale": "1",
@@ -1681,9 +1787,10 @@ pub struct KeyframeRope
     "width": "2",
     "targetname": "cave_rope02",
     "subdiv": "2"
-},
-pub struct EnvShooter
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvShooter{
     "m_flvariance": "0.3",
     "angles": "-90 270 0",
     "renderfx": "0",
@@ -1709,9 +1816,10 @@ pub struct EnvShooter
     "classname": "env_shooter",
     "shootsounds": "-1",
     "hammerid": "564233"
-},
-pub struct WeaponUsp
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct WeaponUsp{
     "hammerid": "597821",
     "origin": "11584 1860 8219",
     "spawnflags": "1",
@@ -1719,9 +1827,10 @@ pub struct WeaponUsp
     "angles": "0 270 0",
     "ammo": "99",
     "classname": "weapon_usp"
-},
-pub struct PropRagdoll
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct PropRagdoll{
     "fadescale": "1",
     "modelscale": "1.0",
     "origin": "352 -9824 368",
@@ -1733,17 +1842,19 @@ pub struct PropRagdoll
     "classname": "prop_ragdoll",
     "hammerid": "739080",
     "targetname": "ragdoll01"
-},
-pub struct PhysBallsocket
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct PhysBallsocket{
     "classname": "phys_ballsocket",
     "targetname": "ballsocket",
     "origin": "355.96 -9816 488",
     "attach1": "ragdoll01",
     "hammerid": "739103"
-},
-pub struct EnvBeam
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct EnvBeam{
     "origin": "5816 -8847.58 4030.12",
     "lightningend": "antlion1",
     "texturescroll": "35",
@@ -1762,9 +1873,10 @@ pub struct EnvBeam
     "radius": "256",
     "rendercolor": "122 230 252",
     "targetname": "tesla_beam1"
-},
-pub struct Light
-{
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct Light{
     "origin": "9536 -304.963 7948",
     "_lightscalehdr": "1",
     "_quadratic_attn": "1",
