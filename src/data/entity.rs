@@ -7,6 +7,9 @@ use std::fmt::Debug;
 use std::str::FromStr;
 use vdf_reader::VdfError;
 
+#[cfg(feature = "css")]
+pub mod css;
+
 #[derive(Clone)]
 pub struct Entities {
     pub entities: String,
@@ -261,6 +264,9 @@ mod typed {
     pub enum EntityVersion<'a> {
         #[serde(borrow)]
         Base(Entity<'a>),
+        #[cfg(feature = "css")]
+        #[serde(borrow)]
+        CSS(super::css::Entity<'a>),
         #[serde(skip)]
         Unknown(RawEntity<'a>),
     }
