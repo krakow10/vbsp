@@ -112,10 +112,10 @@ impl<'a> RawEntity<'a> {
         T::parse(self.prop(key)?)
     }
 
-    pub fn parse(&self) -> Result<Entity<'a>, EntityParseError> {
+    pub fn parse(&self) -> Result<EntityVersion<'a>, EntityParseError> {
         match vdf_reader::from_str(self.buf) {
             Ok(entity) => Ok(entity),
-            Err(VdfError::UnknownVariant(_)) => Ok(Entity::Unknown(self.clone())),
+            Err(VdfError::UnknownVariant(_)) => Ok(EntityVersion::Unknown(self.clone())),
             // todo
             Err(_) => Err(EntityParseError::NoSuchProperty("unknown serde error")),
         }
@@ -257,6 +257,16 @@ mod typed {
 
     #[derive(Debug, Clone, Deserialize)]
     #[non_exhaustive]
+    #[serde(untagged)]
+    pub enum EntityVersion<'a> {
+        #[serde(borrow)]
+        Base(Entity<'a>),
+        #[serde(skip)]
+        Unknown(RawEntity<'a>),
+    }
+
+    #[derive(Debug, Clone, Deserialize)]
+    #[non_exhaustive]
     #[serde(tag = "classname")]
     pub enum Entity<'a> {
         #[serde(rename = "point_spotlight")]
@@ -370,8 +380,6 @@ mod typed {
         #[serde(rename = "func_occluder")]
         #[serde(borrow)]
         Occluder(Occluder<'a>),
-        #[serde(skip)]
-        Unknown(RawEntity<'a>),
     }
 
     #[derive(Debug, Clone, Deserialize)]
