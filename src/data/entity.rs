@@ -373,6 +373,434 @@ mod typed {
         #[serde(rename = "func_occluder")]
         #[serde(borrow)]
         Occluder(Occluder<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_beam")]
+        #[serde(borrow)]
+        EnvBeam(super::css::EnvBeam<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_detail_controller")]
+        EnvDetailController(super::css::EnvDetailController),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_embers")]
+        #[serde(borrow)]
+        EnvEmbers(super::css::EnvEmbers<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_entity_maker")]
+        #[serde(borrow)]
+        EnvEntityMaker(super::css::EnvEntityMaker<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_fade")]
+        #[serde(borrow)]
+        EnvFade(super::css::EnvFade<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_fire")]
+        EnvFire(super::css::EnvFire),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_fire_trail")]
+        #[serde(borrow)]
+        EnvFireTrail(super::css::EnvFireTrail<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_fog_controller")]
+        #[serde(borrow)]
+        EnvFogController(super::css::EnvFogController<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_hudhint")]
+        #[serde(borrow)]
+        EnvHudhint(super::css::EnvHudhint<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_laser")]
+        #[serde(borrow)]
+        EnvLaser(super::css::EnvLaser<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_lightglow")]
+        EnvLightglow(super::css::EnvLightglow),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_shake")]
+        #[serde(borrow)]
+        EnvShake(super::css::EnvShake<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_shooter")]
+        #[serde(borrow)]
+        EnvShooter(super::css::EnvShooter<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_smokestack")]
+        #[serde(borrow)]
+        EnvSmokestack(super::css::EnvSmokestack<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_soundscape")]
+        #[serde(borrow)]
+        EnvSoundscape(super::css::EnvSoundscape<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_soundscape_triggerable")]
+        #[serde(borrow)]
+        EnvSoundscapeTriggerable(super::css::EnvSoundscapeTriggerable<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_spark")]
+        #[serde(borrow)]
+        EnvSpark(super::css::EnvSpark<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_sprite")]
+        #[serde(borrow)]
+        EnvSprite(super::css::EnvSprite<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_spritetrail")]
+        #[serde(borrow)]
+        EnvSpritetrail(super::css::EnvSpritetrail<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_steam")]
+        #[serde(borrow)]
+        EnvSteam(super::css::EnvSteam<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_sun")]
+        #[serde(borrow)]
+        EnvSun(super::css::EnvSun<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_tonemap_controller")]
+        #[serde(borrow)]
+        EnvTonemapController(super::css::EnvTonemapController<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "env_wind")]
+        EnvWind(super::css::EnvWind),
+        #[cfg(feature = "css")]
+        #[serde(rename = "filter_activator_class")]
+        #[serde(borrow)]
+        FilterActivatorClass(super::css::FilterActivatorClass<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "filter_activator_name")]
+        #[serde(borrow)]
+        FilterActivatorName(super::css::FilterActivatorName<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "filter_damage_type")]
+        #[serde(borrow)]
+        FilterDamageType(super::css::FilterDamageType<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "filter_multi")]
+        #[serde(borrow)]
+        FilterMulti(super::css::FilterMulti<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_areaportalwindow")]
+        #[serde(borrow)]
+        FuncAreaportalwindow(super::css::FuncAreaportalwindow<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_breakable")]
+        #[serde(borrow)]
+        FuncBreakable(super::css::FuncBreakable<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_button")]
+        #[serde(borrow)]
+        FuncButton(super::css::FuncButton<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_buyzone")]
+        #[serde(borrow)]
+        FuncBuyzone(super::css::FuncBuyzone<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_conveyor")]
+        #[serde(borrow)]
+        FuncConveyor(super::css::FuncConveyor<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_door_rotating")]
+        #[serde(borrow)]
+        FuncDoorRotating(super::css::FuncDoorRotating<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_dustcloud")]
+        #[serde(borrow)]
+        FuncDustcloud(super::css::FuncDustcloud<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_movelinear")]
+        #[serde(borrow)]
+        FuncMovelinear(super::css::FuncMovelinear<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_physbox")]
+        #[serde(borrow)]
+        FuncPhysbox(super::css::FuncPhysbox<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_physbox_multiplayer")]
+        #[serde(borrow)]
+        FuncPhysboxMultiplayer(super::css::FuncPhysboxMultiplayer<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_precipitation")]
+        #[serde(borrow)]
+        FuncPrecipitation(super::css::FuncPrecipitation<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_rot_button")]
+        #[serde(borrow)]
+        FuncRotButton(super::css::FuncRotButton<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_rotating")]
+        #[serde(borrow)]
+        FuncRotating(super::css::FuncRotating<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_smokevolume")]
+        #[serde(borrow)]
+        FuncSmokevolume(super::css::FuncSmokevolume<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_tracktrain")]
+        #[serde(borrow)]
+        FuncTracktrain(super::css::FuncTracktrain<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_wall")]
+        #[serde(borrow)]
+        FuncWall(super::css::FuncWall<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_wall_toggle")]
+        #[serde(borrow)]
+        FuncWallToggle(super::css::FuncWallToggle<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "func_water_analog")]
+        #[serde(borrow)]
+        FuncWaterAnalog(super::css::FuncWaterAnalog<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "game_player_equip")]
+        #[serde(borrow)]
+        GamePlayerEquip(super::css::GamePlayerEquip<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "game_ui")]
+        #[serde(borrow)]
+        GameUi(super::css::GameUi<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "game_weapon_manager")]
+        #[serde(borrow)]
+        GameWeaponManager(super::css::GameWeaponManager<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "info_ladder")]
+        InfoLadder(super::css::InfoLadder),
+        #[cfg(feature = "css")]
+        #[serde(rename = "info_player_counterterrorist")]
+        InfoPlayerCounterterrorist(super::css::InfoPlayerCounterterrorist),
+        #[cfg(feature = "css")]
+        #[serde(rename = "info_player_start")]
+        InfoPlayerStart(super::css::InfoPlayerStart),
+        #[cfg(feature = "css")]
+        #[serde(rename = "info_player_terrorist")]
+        InfoPlayerTerrorist(super::css::InfoPlayerTerrorist),
+        #[cfg(feature = "css")]
+        #[serde(rename = "info_target")]
+        #[serde(borrow)]
+        InfoTarget(super::css::InfoTarget<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "info_teleport_destination")]
+        #[serde(borrow)]
+        InfoTeleportDestination(super::css::InfoTeleportDestination<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "infodecal")]
+        #[serde(borrow)]
+        Infodecal(super::css::Infodecal<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "keyframe_rope")]
+        #[serde(borrow)]
+        KeyframeRope(super::css::KeyframeRope<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "light")]
+        Light(super::css::Light),
+        #[cfg(feature = "css")]
+        #[serde(rename = "light_environment")]
+        LightEnvironment(super::css::LightEnvironment),
+        #[cfg(feature = "css")]
+        #[serde(rename = "logic_auto")]
+        #[serde(borrow)]
+        LogicAuto(super::css::LogicAuto<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "logic_relay")]
+        #[serde(borrow)]
+        LogicRelay(super::css::LogicRelay<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "logic_timer")]
+        #[serde(borrow)]
+        LogicTimer(super::css::LogicTimer<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "math_counter")]
+        #[serde(borrow)]
+        MathCounter(super::css::MathCounter<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "move_rope")]
+        #[serde(borrow)]
+        MoveRope(super::css::MoveRope<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "path_track")]
+        #[serde(borrow)]
+        PathTrack(super::css::PathTrack<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "phys_ballsocket")]
+        #[serde(borrow)]
+        PhysBallsocket(super::css::PhysBallsocket<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "player_speedmod")]
+        #[serde(borrow)]
+        PlayerSpeedmod(super::css::PlayerSpeedmod<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "player_weaponstrip")]
+        #[serde(borrow)]
+        PlayerWeaponstrip(super::css::PlayerWeaponstrip<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "point_clientcommand")]
+        #[serde(borrow)]
+        PointClientcommand(super::css::PointClientcommand<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "point_servercommand")]
+        #[serde(borrow)]
+        PointServercommand(super::css::PointServercommand<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "point_spotlight")]
+        #[serde(borrow)]
+        PointSpotlight(super::css::PointSpotlight<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "point_template")]
+        #[serde(borrow)]
+        PointTemplate(super::css::PointTemplate<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "point_viewcontrol")]
+        #[serde(borrow)]
+        PointViewcontrol(super::css::PointViewcontrol<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "prop_dynamic")]
+        #[serde(borrow)]
+        PropDynamic(super::css::PropDynamic<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "prop_physics")]
+        #[serde(borrow)]
+        PropPhysics(super::css::PropPhysics<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "prop_physics_multiplayer")]
+        #[serde(borrow)]
+        PropPhysicsMultiplayer(super::css::PropPhysicsMultiplayer<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "prop_physics_override")]
+        #[serde(borrow)]
+        PropPhysicsOverride(super::css::PropPhysicsOverride<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "prop_ragdoll")]
+        #[serde(borrow)]
+        PropRagdoll(super::css::PropRagdoll<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "shadow_control")]
+        ShadowControl(super::css::ShadowControl),
+        #[cfg(feature = "css")]
+        #[serde(rename = "sky_camera")]
+        SkyCamera(super::css::SkyCamera),
+        #[cfg(feature = "css")]
+        #[serde(rename = "trigger_gravity")]
+        #[serde(borrow)]
+        TriggerGravity(super::css::TriggerGravity<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "trigger_hurt")]
+        #[serde(borrow)]
+        TriggerHurt(super::css::TriggerHurt<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "trigger_look")]
+        #[serde(borrow)]
+        TriggerLook(super::css::TriggerLook<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "trigger_multiple")]
+        #[serde(borrow)]
+        TriggerMultiple(super::css::TriggerMultiple<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "trigger_once")]
+        #[serde(borrow)]
+        TriggerOnce(super::css::TriggerOnce<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "trigger_push")]
+        #[serde(borrow)]
+        TriggerPush(super::css::TriggerPush<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "trigger_soundscape")]
+        #[serde(borrow)]
+        TriggerSoundscape(super::css::TriggerSoundscape<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "trigger_teleport")]
+        #[serde(borrow)]
+        TriggerTeleport(super::css::TriggerTeleport<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "water_lod_control")]
+        WaterLodControl(super::css::WaterLodControl),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_ak47")]
+        #[serde(borrow)]
+        WeaponAk47(super::css::WeaponAk47<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_awp")]
+        #[serde(borrow)]
+        WeaponAwp(super::css::WeaponAwp<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_deagle")]
+        WeaponDeagle(super::css::WeaponDeagle),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_elite")]
+        #[serde(borrow)]
+        WeaponElite(super::css::WeaponElite<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_famas")]
+        WeaponFamas(super::css::WeaponFamas),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_fiveseven")]
+        #[serde(borrow)]
+        WeaponFiveseven(super::css::WeaponFiveseven<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_flashbang")]
+        #[serde(borrow)]
+        WeaponFlashbang(super::css::WeaponFlashbang<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_g3sg1")]
+        WeaponG3sg1(super::css::WeaponG3sg1),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_glock")]
+        #[serde(borrow)]
+        WeaponGlock(super::css::WeaponGlock<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_hegrenade")]
+        #[serde(borrow)]
+        WeaponHegrenade(super::css::WeaponHegrenade<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_knife")]
+        #[serde(borrow)]
+        WeaponKnife(super::css::WeaponKnife<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_m249")]
+        #[serde(borrow)]
+        WeaponM249(super::css::WeaponM249<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_m3")]
+        #[serde(borrow)]
+        WeaponM3(super::css::WeaponM3<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_m4a1")]
+        #[serde(borrow)]
+        WeaponM4a1(super::css::WeaponM4a1<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_mac10")]
+        WeaponMac10(super::css::WeaponMac10),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_p90")]
+        #[serde(borrow)]
+        WeaponP90(super::css::WeaponP90<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_scout")]
+        #[serde(borrow)]
+        WeaponScout(super::css::WeaponScout<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_sg550")]
+        WeaponSg550(super::css::WeaponSg550),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_smokegrenade")]
+        #[serde(borrow)]
+        WeaponSmokegrenade(super::css::WeaponSmokegrenade<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_tmp")]
+        WeaponTmp(super::css::WeaponTmp),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_ump45")]
+        WeaponUmp45(super::css::WeaponUmp45),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_usp")]
+        #[serde(borrow)]
+        WeaponUsp(super::css::WeaponUsp<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "weapon_xm1014")]
+        #[serde(borrow)]
+        WeaponXm1014(super::css::WeaponXm1014<'a>),
+        #[cfg(feature = "css")]
+        #[serde(rename = "worldspawn")]
+        #[serde(borrow)]
+        Worldspawn(super::css::Worldspawn<'a>),
         #[serde(skip)]
         Unknown(RawEntity<'a>),
     }
