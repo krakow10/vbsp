@@ -9,6 +9,8 @@ use vdf_reader::VdfError;
 
 #[cfg(feature = "basic")]
 pub mod basic;
+#[cfg(feature = "tf2")]
+pub mod tf2;
 
 #[derive(Clone)]
 pub struct Entities {
