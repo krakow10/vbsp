@@ -116,11 +116,6 @@ impl From<Vec<Leaf>> for Leaves {
         Self::new(other)
     }
 }
-impl From<Vec<LeafV0>> for Leaves {
-    fn from(other: Vec<LeafV0>) -> Self {
-        Self::new(other.into_iter().map(Into::into).collect())
-    }
-}
 
 impl Deref for Leaves {
     type Target = [Leaf];
@@ -219,7 +214,7 @@ impl Bsp {
             .read_vec(|r| r.read())?;
         let leaves = bsp_file
             .lump_reader(LumpType::Leaves)?
-            .read_vec(|r| r.read::<Leaf>())?
+            .read_vec(|r| r.read())?
             .into();
         let leaf_faces = bsp_file
             .lump_reader(LumpType::LeafFaces)?
