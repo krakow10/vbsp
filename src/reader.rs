@@ -74,9 +74,12 @@ impl<R: BinReaderExt + Read> LumpReader<R> {
         // );
         Ok(result)
     }
-    pub fn read_version<'a, T: BinRead<Args<'a> = (u32,)> + Debug>(&mut self) -> BspResult<T> {
-        let version = self.version;
-        let result = T::read_options(&mut self.inner, binrw::Endian::Little, (version,))?;
+    pub fn read_args<'a, T: BinRead<Args<'a> = LumpArgs> + Debug>(&mut self) -> BspResult<T> {
+        let args = LumpArgs {
+            length: self.length,
+            version: self.version,
+        };
+        let result = T::read_options(&mut self.inner, binrw::Endian::Little, args)?;
         Ok(result)
     }
 
