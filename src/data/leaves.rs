@@ -1,7 +1,5 @@
-use std::{
-    io::{Read, Seek},
-    ops::Deref,
-};
+use std::io::{Read, Seek};
+use std::ops::Deref;
 
 use binrw::{BinRead, BinResult, Endian};
 
