@@ -121,7 +121,7 @@ bitflags! {
     }
 }
 
-#[derive(BinRead, Debug, Clone, Copy)]
+#[derive(BinRead, Debug, Default, Clone, Copy)]
 pub struct ColorRGBExp32 {
     pub r: u8,
     pub g: u8,
@@ -129,7 +129,7 @@ pub struct ColorRGBExp32 {
     pub exponent: i8,
 }
 
-#[derive(BinRead, Debug, Clone, Copy)]
+#[derive(BinRead, Debug, Default, Clone, Copy)]
 pub struct CompressedLightCube {
     pub color: [ColorRGBExp32; 6],
 }
@@ -238,7 +238,7 @@ pub struct Node {
 
 static_assertions::const_assert_eq!(size_of::<Node>(), 32);
 
-#[derive(Debug, Clone, BinRead)]
+#[derive(Default, Debug, Clone, BinRead)]
 pub struct LeafV0 {
     pub contents: i32,
     pub cluster: i16,
@@ -255,7 +255,7 @@ pub struct LeafV0 {
     pub cube: CompressedLightCube,
 }
 
-static_assertions::const_assert_eq!(size_of::<LeafV0>(), 32 + 24);
+static_assertions::const_assert_eq!(size_of::<LeafV0>(), 56);
 
 impl From<LeafV0> for Leaf {
     fn from(value: LeafV0) -> Self {
@@ -270,6 +270,7 @@ impl From<LeafV0> for Leaf {
             first_leaf_brush: value.first_leaf_brush,
             leaf_brush_count: value.leaf_brush_count,
             leaf_watter_data_id: value.leaf_watter_data_id,
+            cube: value.cube,
         }
     }
 }
@@ -305,6 +306,7 @@ impl From<LeafV1> for Leaf {
             first_leaf_brush: value.first_leaf_brush,
             leaf_brush_count: value.leaf_brush_count,
             leaf_watter_data_id: value.leaf_watter_data_id,
+            cube: Default::default(),
         }
     }
 }
@@ -322,9 +324,10 @@ pub struct Leaf {
     pub first_leaf_brush: u16,
     pub leaf_brush_count: u16,
     pub leaf_watter_data_id: i16,
+    pub cube: CompressedLightCube,
 }
 
-static_assertions::const_assert_eq!(size_of::<Leaf>(), 32);
+static_assertions::const_assert_eq!(size_of::<Leaf>(), 56);
 
 #[test]
 fn test_leaf_bytes() {
