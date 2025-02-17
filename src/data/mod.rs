@@ -334,7 +334,7 @@ fn test_leaf_bytes() {
     test_read_bytes::<Leaf>();
 }
 impl BinRead for Leaf {
-    type Args<'a> = (u16,);
+    type Args<'a> = (u32,);
 
     fn read_options<R: Read + Seek>(
         reader: &mut R,
@@ -347,7 +347,7 @@ impl BinRead for Leaf {
             version => Err(binrw::Error::Custom {
                 err: Box::new(crate::error::UnsupportedLumpVersion {
                     lump_type: "leaves",
-                    version,
+                    version: version as u16,
                 }),
                 pos: reader.stream_position().unwrap(),
             }),

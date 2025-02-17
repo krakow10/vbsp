@@ -26,17 +26,17 @@ impl<'a> BspFile<'a> {
         &self.header
     }
 
-    pub fn lump_version(&self, lump: LumpType) -> u32 {
-        self.directories[lump].version
-    }
-
     pub fn lump_reader(&self, lump: LumpType) -> BspResult<LumpReader<Cursor<Cow<[u8]>>>> {
-        let data = self.get_lump(lump)?;
-        Ok(LumpReader::new(data, lump))
+        let entry = self.get_lump_entry(lump);
+        let data = self.get_lump(entry)?;
+        Ok(LumpReader::new(data, lump, entry.version))
     }
 
-    pub fn get_lump(&self, lump: LumpType) -> BspResult<Cow<[u8]>> {
-        let lump = &self.directories[lump];
+    pub fn get_lump_entry(&self, lump: LumpType) -> &LumpEntry {
+        &self.directories[lump]
+    }
+
+    pub fn get_lump(&self, lump: &LumpEntry) -> BspResult<Cow<[u8]>> {
         let raw_data = self
             .data
             .get(lump.offset as usize..lump.offset as usize + lump.length as usize)
