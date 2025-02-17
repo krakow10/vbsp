@@ -217,22 +217,10 @@ impl Bsp {
         let nodes = bsp_file
             .lump_reader(LumpType::Nodes)?
             .read_vec(|r| r.read())?;
-        let leaves = match bsp_file.lump_version(LumpType::Leaves) {
-            0 => bsp_file
-                .lump_reader(LumpType::Leaves)?
-                .read_vec(|r| r.read::<LeafV0>())?
-                .into(),
-            1 => bsp_file
-                .lump_reader(LumpType::Leaves)?
-                .read_vec(|r| r.read::<Leaf>())?
-                .into(),
-            other => {
-                return Err(BspError::LumpVersion(error::UnsupportedLumpVersion {
-                    lump_type: "leaves",
-                    version: other as u16,
-                }))
-            }
-        };
+        let leaves = bsp_file
+            .lump_reader(LumpType::Leaves)?
+            .read_vec(|r| r.read::<Leaf>())?
+            .into();
         let leaf_faces = bsp_file
             .lump_reader(LumpType::LeafFaces)?
             .read_vec(|r| r.read())?;
