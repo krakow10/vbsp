@@ -116,6 +116,11 @@ impl From<Vec<Leaf>> for Leaves {
         Self::new(other)
     }
 }
+impl From<Vec<LeafV0>> for Leaves {
+    fn from(other: Vec<LeafV0>) -> Self {
+        Self::new(other.into_iter().map(Into::into).collect())
+    }
+}
 
 impl Deref for Leaves {
     type Target = [Leaf];
@@ -212,10 +217,22 @@ impl Bsp {
         let nodes = bsp_file
             .lump_reader(LumpType::Nodes)?
             .read_vec(|r| r.read())?;
-        let leaves = bsp_file
-            .lump_reader(LumpType::Leaves)?
-            .read_vec(|r| r.read())?
-            .into();
+        let leaves = match bsp_file.lump_version(LumpType::Leaves) {
+            0 => bsp_file
+                .lump_reader(LumpType::Leaves)?
+                .read_vec(|r| r.read::<LeafV0>())?
+                .into(),
+            1 => bsp_file
+                .lump_reader(LumpType::Leaves)?
+                .read_vec(|r| r.read::<Leaf>())?
+                .into(),
+            other => {
+                return Err(BspError::LumpVersion(error::UnsupportedLumpVersion {
+                    lump_type: "leaves",
+                    version: other as u16,
+                }))
+            }
+        };
         let leaf_faces = bsp_file
             .lump_reader(LumpType::LeafFaces)?
             .read_vec(|r| r.read())?;
