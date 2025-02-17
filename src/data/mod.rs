@@ -343,7 +343,7 @@ impl BinRead for Leaf {
     ) -> BinResult<Self> {
         match args.0 {
             0 => LeafV0::read_options(reader, endian, ()).map(Leaf::from),
-            1 => LeafV0::read_options(reader, endian, ()).map(Leaf::from),
+            1 => LeafV1::read_options(reader, endian, ()).map(Leaf::from),
             version => Err(binrw::Error::Custom {
                 err: Box::new(crate::error::UnsupportedLumpVersion {
                     lump_type: "leaves",
