@@ -3,6 +3,11 @@ use std::ops::Deref;
 
 use binrw::{BinRead, BinResult, Endian};
 
+use crate::bspfile::LumpType;
+use crate::BspError;
+
+use super::LumpArgs;
+
 #[derive(Debug, Clone)]
 pub struct Leaves {
     leaves: Vec<Leaf>,
@@ -32,6 +37,48 @@ impl Leaves {
             leaves: &self.leaves,
             index: 0,
         }
+    }
+}
+
+impl BinRead for Leaves {
+    type Args<'a> = LumpArgs;
+
+    fn read_options<R: Read + Seek>(
+        reader: &mut R,
+        endian: Endian,
+        args: Self::Args<'_>,
+    ) -> BinResult<Self> {
+        let item_size = match args.version {
+            0 => size_of::<LeafV0>(),
+            1 => size_of::<LeafV1>(),
+            version => {
+                return Err(binrw::Error::Custom {
+                    err: Box::new(crate::error::UnsupportedLumpVersion {
+                        lump_type: "leaves",
+                        version: version as u16,
+                    }),
+                    pos: reader.stream_position().unwrap(),
+                })
+            }
+        };
+        if args.length % item_size != 0 {
+            return Err(binrw::Error::Custom {
+                err: Box::new(BspError::InvalidLumpSize {
+                    lump: LumpType::Leaves,
+                    element_size: item_size,
+                    lump_size: args.length,
+                }),
+                pos: reader.stream_position().unwrap(),
+            });
+        }
+        let num_entries = args.length / item_size;
+        let mut entries = Vec::with_capacity(num_entries);
+
+        for _ in 0..num_entries {
+            entries.push(Leaf::read_options(reader, endian, (args.version,))?);
+        }
+
+        Ok(Self { leaves: entries })
     }
 }
 
