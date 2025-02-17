@@ -214,7 +214,7 @@ impl Bsp {
             .read_vec(|r| r.read())?;
         let leaves = bsp_file
             .lump_reader(LumpType::Leaves)?
-            .read_vec(|r| r.read())?
+            .read_vec(|r| r.read_version())?
             .into();
         let leaf_faces = bsp_file
             .lump_reader(LumpType::LeafFaces)?
