@@ -1,5 +1,5 @@
 use crate::bool_from_int;
-use crate::{Angles, Color, LightColor, Vector};
+use crate::{Angles, Color, LightColor, Negated, Vector};
 use serde::Deserialize;
 
 #[derive(Debug, Clone, Deserialize)]
@@ -871,8 +871,9 @@ pub struct BotHintEngineerNest<'a> {
     pub origin: Vector,
     #[serde(default)]
     pub spawnflags: Option<u32>,
+    #[serde(deserialize_with = "bool_from_int")]
     #[serde(default)]
-    pub startdisabled: Option<&'a str>,
+    pub startdisabled: bool,
     pub targetname: &'a str,
     pub teamnum: u8,
 }
@@ -886,8 +887,9 @@ pub struct BotHintSentrygun<'a> {
     pub sequence: Option<u8>,
     #[serde(default)]
     pub spawnflags: Option<u32>,
+    #[serde(deserialize_with = "bool_from_int")]
     #[serde(default)]
-    pub startdisabled: Option<&'a str>,
+    pub startdisabled: bool,
     #[serde(deserialize_with = "bool_from_int")]
     #[serde(default)]
     pub sticky: bool,
@@ -911,8 +913,9 @@ pub struct BotHintTeleporterExit<'a> {
     pub origin: Vector,
     #[serde(default)]
     pub spawnflags: Option<u32>,
+    #[serde(deserialize_with = "bool_from_int")]
     #[serde(default)]
-    pub startdisabled: Option<&'a str>,
+    pub startdisabled: bool,
     #[serde(default)]
     pub targetname: Option<&'a str>,
     pub teamnum: u8,
@@ -1624,7 +1627,7 @@ pub struct FilterActivatorClass<'a> {
     pub angles: Option<Angles>,
     pub filterclass: &'a str,
     #[serde(default)]
-    pub negated: Option<&'a str>,
+    pub negated: Option<Negated>,
     pub origin: Vector,
     pub targetname: &'a str,
 }
@@ -1635,7 +1638,7 @@ pub struct FilterActivatorName<'a> {
     #[serde(default)]
     pub filtername: Option<&'a str>,
     #[serde(default)]
-    pub negated: Option<&'a str>,
+    pub negated: Option<Negated>,
     #[serde(default)]
     pub onpass: Option<&'a str>,
     pub origin: Vector,
@@ -1659,7 +1662,7 @@ pub struct FilterActivatorTfteam<'a> {
     #[serde(default)]
     pub linedivider1: Option<&'a str>,
     #[serde(default)]
-    pub negated: Option<&'a str>,
+    pub negated: Option<Negated>,
     #[serde(default)]
     pub onfail: Option<&'a str>,
     #[serde(default)]
@@ -1679,7 +1682,7 @@ pub struct FilterBase<'a> {
 #[derive(Debug, Clone, Deserialize)]
 pub struct FilterDamageType<'a> {
     pub damagetype: u16,
-    pub negated: &'a str,
+    pub negated: Negated,
     pub origin: Vector,
     pub targetname: &'a str,
 }
@@ -1698,13 +1701,13 @@ pub struct FilterMulti<'a> {
     #[serde(deserialize_with = "bool_from_int")]
     pub filtertype: bool,
     #[serde(default)]
-    pub negated: Option<&'a str>,
+    pub negated: Option<Negated>,
     pub origin: Vector,
     pub targetname: &'a str,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct FilterTfBotHasTag<'a> {
-    pub negated: &'a str,
+    pub negated: Negated,
     pub origin: Vector,
     #[serde(deserialize_with = "bool_from_int")]
     pub require_all_tags: bool,
@@ -1713,7 +1716,7 @@ pub struct FilterTfBotHasTag<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct FilterTfClass<'a> {
-    pub negated: &'a str,
+    pub negated: Negated,
     pub origin: Vector,
     pub targetname: &'a str,
     pub tfclass: u8,
@@ -1722,13 +1725,13 @@ pub struct FilterTfClass<'a> {
 pub struct FilterTfCondition<'a> {
     pub condition: u8,
     #[serde(default)]
-    pub negated: Option<&'a str>,
+    pub negated: Option<Negated>,
     pub origin: Vector,
     pub targetname: &'a str,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct FilterTfDamagedByWeaponInSlot<'a> {
-    pub negated: &'a str,
+    pub negated: Negated,
     pub origin: Vector,
     #[serde(default)]
     pub spawnflags: Option<u32>,
@@ -6610,7 +6613,8 @@ pub struct TriggerCatapult<'a> {
     #[serde(default)]
     pub oncapteam2_pd: Option<&'a str>,
     pub oncatapulted: &'a str,
-    pub onlyvelocitycheck: &'a str,
+    #[serde(deserialize_with = "bool_from_int")]
+    pub onlyvelocitycheck: bool,
     #[serde(default)]
     pub onstarttouch: Option<&'a str>,
     pub origin: Vector,
@@ -6626,7 +6630,8 @@ pub struct TriggerCatapult<'a> {
     pub upperthreshold: f32,
     #[serde(deserialize_with = "bool_from_int")]
     pub useexactvelocity: bool,
-    pub usethresholdcheck: &'a str,
+    #[serde(deserialize_with = "bool_from_int")]
+    pub usethresholdcheck: bool,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct TriggerGravity<'a> {
