@@ -278,8 +278,37 @@ impl<'de> Deserialize<'de> for LightColor {
     }
 }
 
+// This is a proxy type to avoid the Deserialize machinery
+// from within the bool_from_int function, allowing it to parse
+// from a simple &str rather than greedily (wrongly) assuming types.
+#[derive(Debug, Clone, Deserialize)]
+enum Bool {
+    False,
+    True,
+}
+impl Bool {
+    fn to_bool(self) -> bool {
+        match self {
+            Bool::True => true,
+            Bool::False => false,
+        }
+    }
+}
+struct BoolParseErr;
+impl FromStr for Bool {
+    type Err = BoolParseErr;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "0" | "no" => Ok(Bool::False),
+            "1" | "yes" => Ok(Bool::True),
+            _ => Err(BoolParseErr),
+        }
+    }
+}
+
 #[allow(dead_code)]
 pub(crate) fn bool_from_int<'de, D: Deserializer<'de>>(deserializer: D) -> Result<bool, D::Error> {
-    let int = u8::deserialize(deserializer)?;
-    Ok(int != 0)
+    let b = Bool::deserialize(deserializer)?;
+    Ok(b.to_bool())
 }
