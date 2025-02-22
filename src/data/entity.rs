@@ -300,7 +300,11 @@ impl FromStr for Negated {
 impl FromStrProp for Negated {}
 
 #[allow(dead_code)]
-pub(crate) fn bool_from_int<'de, D: Deserializer<'de>>(deserializer: D) -> Result<bool, D::Error> {
-    let int = u8::deserialize(deserializer)?;
-    Ok(int != 0)
+pub fn bool_from_int<'de, D: Deserializer<'de>>(deserializer: D) -> Result<bool, D::Error> {
+    let s = <&str>::deserialize(deserializer)?;
+    match s {
+        "0" | "no" => Ok(false),
+        "1" | "yes" => Ok(true),
+        other => Err(D::Error::invalid_value(Unexpected::Str(other), &"bool")),
+    }
 }
