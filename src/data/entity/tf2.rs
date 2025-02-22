@@ -4545,7 +4545,7 @@ pub struct Merasmus<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct MomentaryRotButton<'a> {
-    pub angles: &'a str,
+    pub angles: Angles,
     #[serde(deserialize_with = "bool_from_int")]
     pub disablereceiveshadows: bool,
     pub distance: f32,
