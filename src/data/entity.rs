@@ -278,6 +278,27 @@ impl<'de> Deserialize<'de> for LightColor {
     }
 }
 
+#[derive(Debug, Clone, Deserialize)]
+pub enum Negated {
+    Yes,
+    No,
+    MatchingCriteria,
+}
+pub struct NegatedParseErr;
+impl FromStr for Negated {
+    type Err = NegatedParseErr;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "1" => Ok(Negated::Yes),
+            "0" => Ok(Negated::No),
+            "allow entities that match criteria" => Ok(Negated::MatchingCriteria),
+            _ => Err(NegatedParseErr),
+        }
+    }
+}
+impl FromStrProp for Negated {}
+
 #[allow(dead_code)]
 pub(crate) fn bool_from_int<'de, D: Deserializer<'de>>(deserializer: D) -> Result<bool, D::Error> {
     let int = u8::deserialize(deserializer)?;
