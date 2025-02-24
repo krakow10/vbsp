@@ -413,6 +413,7 @@ impl<'de> serde::de::Visitor<'de> for BoolVisitor {
     }
 }
 
+// TODO: rename to deserialize_bool
 #[allow(dead_code)]
 pub fn bool_from_int<'de, D: Deserializer<'de>>(deserializer: D) -> Result<bool, D::Error> {
     BoolSeed.deserialize(deserializer)
