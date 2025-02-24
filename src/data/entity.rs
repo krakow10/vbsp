@@ -312,7 +312,7 @@ impl<'de> DeserializeSeed<'de> for NegatedSeed {
 }
 
 struct NegatedVisitor;
-impl<'de> serde::de::Visitor<'de> for NegatedVisitor {
+impl serde::de::Visitor<'_> for NegatedVisitor {
     type Value = Negated;
 
     fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
@@ -372,7 +372,7 @@ impl<'de> DeserializeSeed<'de> for BoolSeed {
 }
 
 struct BoolVisitor;
-impl<'de> serde::de::Visitor<'de> for BoolVisitor {
+impl serde::de::Visitor<'_> for BoolVisitor {
     type Value = bool;
 
     fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
