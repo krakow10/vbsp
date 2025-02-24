@@ -1,6 +1,6 @@
 use crate::error::EntityParseError;
 use crate::{Angles, Vector};
-use serde::de::{Error, Unexpected};
+use serde::de::{DeserializeSeed, Error, Unexpected};
 use serde::{Deserialize, Deserializer};
 use std::fmt;
 use std::fmt::Debug;
@@ -278,7 +278,7 @@ impl<'de> Deserialize<'de> for LightColor {
     }
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone)]
 pub enum Negated {
     Yes,
     No,
@@ -298,6 +298,66 @@ impl FromStr for Negated {
     }
 }
 impl FromStrProp for Negated {}
+
+struct NegatedSeed;
+impl<'de> DeserializeSeed<'de> for NegatedSeed {
+    type Value = Negated;
+
+    fn deserialize<D>(self, deserializer: D) -> Result<Self::Value, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        deserializer.deserialize_str(NegatedVisitor)
+    }
+}
+
+struct NegatedVisitor;
+impl<'de> serde::de::Visitor<'de> for NegatedVisitor {
+    type Value = Negated;
+
+    fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+        write!(formatter, "Negated value")
+    }
+
+    fn visit_u64<E>(self, v: u64) -> Result<Self::Value, E>
+    where
+        E: Error,
+    {
+        match v {
+            0 => Ok(Negated::No),
+            1 => Ok(Negated::Yes),
+            _ => Err(E::invalid_value(Unexpected::Unsigned(v), &"0 or 1")),
+        }
+    }
+
+    fn visit_i64<E>(self, v: i64) -> Result<Self::Value, E>
+    where
+        E: Error,
+    {
+        match v {
+            0 => Ok(Negated::No),
+            1 => Ok(Negated::Yes),
+            _ => Err(E::invalid_value(Unexpected::Signed(v), &"0 or 1")),
+        }
+    }
+
+    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
+    where
+        E: Error,
+    {
+        v.parse()
+            .map_err(|_| E::invalid_value(Unexpected::Str(v), &"Negated"))
+    }
+}
+
+impl<'de> Deserialize<'de> for Negated {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        NegatedSeed.deserialize(deserializer)
+    }
+}
 
 #[allow(dead_code)]
 pub fn bool_from_int<'de, D: Deserializer<'de>>(deserializer: D) -> Result<bool, D::Error> {
