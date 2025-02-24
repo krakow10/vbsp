@@ -307,7 +307,7 @@ impl<'de> DeserializeSeed<'de> for NegatedSeed {
     where
         D: Deserializer<'de>,
     {
-        deserializer.deserialize_str(NegatedVisitor)
+        deserializer.deserialize_any(NegatedVisitor)
     }
 }
 
@@ -367,7 +367,7 @@ impl<'de> DeserializeSeed<'de> for BoolSeed {
     where
         D: Deserializer<'de>,
     {
-        deserializer.deserialize_str(BoolVisitor)
+        deserializer.deserialize_any(BoolVisitor)
     }
 }
 
