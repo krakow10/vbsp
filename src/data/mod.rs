@@ -538,9 +538,9 @@ where
 
 #[derive(Debug, Copy, Clone, BinRead, Default)]
 pub struct Angles {
-    pitch: f32,
-    yaw: f32,
-    roll: f32,
+    pub pitch: f32,
+    pub yaw: f32,
+    pub roll: f32,
 }
 
 impl<'de> Deserialize<'de> for Angles {
